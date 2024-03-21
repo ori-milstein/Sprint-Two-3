@@ -2,8 +2,14 @@
 
 function initGallery() {
     const imgs = getImgs()
+    const gallery = document.querySelector('.gallery')
 
-    document.querySelector('.gallery').innerHTML = imgs.map(img =>
+    gallery.innerHTML = `
+    <a href="#">
+        <img src="Fonts/upload-solid.svg" alt="" class="upload">
+        </a>
+    `
+    gallery.innerHTML += imgs.map(img =>
         `
         <a href="#">
             <img src="img/meme-imgs/meme-imgs-square/${img.id}.jpg" alt="" onclick="onImgSelect(${img.id})">

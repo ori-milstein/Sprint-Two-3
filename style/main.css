@@ -274,6 +274,12 @@ input[type="color"] {
     height: 200px;
 }
 
+/* .upload {
+    width: 2em;
+    height: 2em;
+    vertical-align: -0.125em;
+} */
+
 /* button {
     display: inline;
     max-width: max-content;

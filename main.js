@@ -20,8 +20,12 @@ function initCanvas() {
 
     resizeCanvas()
     window.addEventListener('resize', () => {
-        resizeCanvas()
-        renderMeme()
+        const isEditorHidden = document.querySelector('.editor').classList.contains('hidden')
+
+        if (!isEditorHidden) {
+            resizeCanvas()
+            renderMeme()
+        }
     })
     // setLineTxt(document.querySelector('[name="firstLine"]').value)
 

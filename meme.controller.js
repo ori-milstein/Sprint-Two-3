@@ -2,7 +2,7 @@
 
 var positions
 
-function renderMeme(isLineNew = false, isInit = false, isNoRect = false) {
+function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownload = false) {
     const gallery = document.querySelector('.gallery')
     const editor = document.querySelector('.editor')
 
@@ -34,6 +34,7 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false) {
         // renderRects()
 
         if (!isNoRect) renderRect(meme.selectedLineIdx)
+        if (isDownload) onDownload()
     })
 }
 function renderText(isLineNew = false) {
@@ -196,22 +197,20 @@ function onSwitchLine(idx, isLineNew = false) {
 }
 
 function onDownload() {
-    // const dataUrl = gElCanvas.toDataURL()
-    // const elLink = document.querySelector('a.download')
-    // const firstLine = getMeme().lines[0].txt
+    const elLink = document.createElement('a')
+    const dataUrl = gElCanvas.toDataURL()
+    const firstLine = getMeme().lines[0].txt
 
-    renderMeme(false, false, true)
+    elLink.setAttribute('href', dataUrl)
+    // console.log('elLink', elLink)
 
-    setTimeout(() => {
-        console.log('hi')
-        const dataUrl = gElCanvas.toDataURL()
-        const elLink = document.querySelector('a.download')
-        const firstLine = getMeme().lines[0].txt
+    gMeme.downloadClicked = true
+    // console.log('elLink', elLink)
 
-        elLink.setAttribute('href', dataUrl)
-        elLink.setAttribute('download', `${firstLine}.png`)
-        if (!getMeme().alreadyDownload) document.querySelector('.download').click()
+    elLink.setAttribute('download', `${firstLine}.png`)
+    elLink.click()
+    // elLink.removeAttribute('download')
+    // console.log('elLink after remove', elLink)
 
-        getMeme().alreadyDownload = true
-    }, 1000)
+
 }

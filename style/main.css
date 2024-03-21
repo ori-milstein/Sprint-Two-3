@@ -82,13 +82,14 @@ header span {
     grid-template-columns: 1fr 1fr;
     /* justify-content: center; */
     /* align-items: center; */
-    /* gap: 90px; */
+    gap: 20px;
 
 }
 
 
 .canvas-container {
     /* width: 80vw; */
+    justify-self: center;
 }
 
 canvas {
@@ -280,4 +281,24 @@ input[type="color"] {
 
 .hidden {
     display: none;
+}
+
+@media screen and (width<=1065px) {
+    .editor {
+        grid-area: main;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        /* display: flex; */
+        /* grid-auto-flow: row; */
+        /* flex-direction: row; */
+        /* justify-content: center; */
+        /* align-items: center; */
+        /* gap: 20px; */
+
+    }
+
+    .canvas-container {
+        align-self: center;
+    }
 }

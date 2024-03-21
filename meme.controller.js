@@ -19,7 +19,8 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false) {
         // gCtx.drawImage(img, 0, 0)
         // gElCanvas.width = img.width
         // gElCanvas.height = img.height
-        coverCanvasWithImg(img)
+        // coverCanvasWithImg(img)
+        initCanvasWidth(img)
         // if (isInit) {
         positions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }]
         positions.forEach((pos, idx) => updatePosition(pos, idx))

@@ -91,6 +91,13 @@ function resizeCanvas() {
     gElCanvas.width = elContainer.clientWidth
 }
 
+function initCanvasWidth(elImg) {
+    gElCanvas.height = elImg.height
+    gElCanvas.width = elImg.width
+    gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
+
+}
+
 function coverCanvasWithImg(elImg) {
     gElCanvas.height = (elImg.naturalHeight / elImg.naturalWidth) * gElCanvas.width
     gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)

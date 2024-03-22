@@ -108,10 +108,10 @@ function onChangeColor(val, idx = getMeme().selectedLineIdx) {
 function onChangeFontSize(dir) {
     setFontSize(dir)
     console.log('getMeme().lines[getMeme().selectedLineIdx].size', getMeme().lines[getMeme().selectedLineIdx].size)
-    const size = getMeme().lines[getMeme().selectedLineIdx].size + ''
+    // const size = getMeme().lines[getMeme().selectedLineIdx].size + ''
 
-    gCtx.font = size + "px arial"
-    console.log('gCtx.font', gCtx.font)
+    // gCtx.font = size + "px arial"
+    // console.log('gCtx.font', gCtx.font)
 
     renderMeme()
 }

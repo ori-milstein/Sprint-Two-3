@@ -27,9 +27,6 @@ function initCanvas() {
             renderMeme()
         }
     })
-    // setLineTxt(document.querySelector('[name="firstLine"]').value)
-
-
 }
 
 function initInputs() {
@@ -66,8 +63,6 @@ function onDraw(ev) {
 }
 
 function drawText(text, x, y) {
-    // gCtx.strokeStyle = 'black'
-    // gCtx.fillStyle = 'red'
     gCtx.beginPath()
     gCtx.fillText(text, x, y)
     gCtx.strokeText(text, x, y)
@@ -81,7 +76,6 @@ function drawRect(x, y, width, height) {
     gCtx.beginPath()
     gCtx.strokeRect(x, y, width, height)
     gCtx.closePath()
-    // gCtx.strokeStyle = oldSyle
 }
 
 

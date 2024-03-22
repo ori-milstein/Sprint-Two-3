@@ -20,13 +20,11 @@ function initGallery() {
 function renderGallery(params) {
     const gallery = document.querySelector('.gallery')
     const editor = document.querySelector('.editor')
-    // gallery.innerHTML = ``
     editor.classList.add('hidden')
     gallery.classList.remove('hidden')
 }
 
 function onImgSelect(id) {
     setImg(id)
-    // document.querySelector('input').value = ''
     renderMeme()
 }

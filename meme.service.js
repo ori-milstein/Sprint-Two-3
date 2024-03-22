@@ -27,7 +27,7 @@ var gMeme = {
         { txt: 'I sometimes eat Falafel', size: 20, color: '#ff0000' },
         { txt: 'I enjoy eating Falafel', size: 20, color: '#ff0000' },
     ],
-    downloadClicked: false
+    // downloadClicked: false
 }
 
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
@@ -52,20 +52,14 @@ function getImgs() {
 function setLineTxt(txt, lineIdx = 0) {
     const { selectedLineIdx, lines } = gMeme
 
-    // if (selectedLineIdx !== lineIdx) gMeme.selectedLineIdx = lineIdx
     lines[selectedLineIdx].txt = txt
 }
 
 function switchLine(idx) {
-    // console.log('idx', idx)
     var { selectedLineIdx, lines } = gMeme
-    // console.log('selectedLineIdx', selectedLineIdx)
-    // console.log('lines.length', lines.length)
 
     gMeme.selectedLineIdx = (idx === undefined) ? (selectedLineIdx === lines.length - 1) ? 0 : ++gMeme.selectedLineIdx : idx
 
-    // console.log('selectedLineIdx', gMeme.selectedLineIdx)
-    // gCtx.font = `${lines[selectedLineIdx].size}px arial`
     return gMeme.selectedLineIdx
 }
 
@@ -75,7 +69,6 @@ function setLineColor(color, lineIdx = gMeme.selectedLineIdx) {
 
 function setFontSize(dir) {
     gMeme.lines[gMeme.selectedLineIdx].size += dir * 2.5
-    // gMeme.lines.forEach(line => line.size += dir * 5)
 }
 
 function setImg(id) {

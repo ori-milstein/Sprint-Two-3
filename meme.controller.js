@@ -27,7 +27,7 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
     img.addEventListener("load", () => {
         // coverCanvasWithImg(img)
         initCanvasWidth(img)
-        positions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }]
+        if (isInit) positions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }]
         positions.forEach((pos, idx) => updatePosition(pos, idx))
         gCtx.textAlign = 'center'
         gCtx.textBaseline = 'middle'
@@ -51,6 +51,7 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
         // if (getMeme().lines[getMeme().selectedLineIdx].pos) rectY = getMeme().lines[getMeme().selectedLineIdx].pos.y - gCtx.measureText(getMeme().lines[getMeme().selectedLineIdx].txt).actualBoundingBoxAscent - 10
         // console.log('rectX', rectX)
         // console.log('rectY', rectY)
+        if (isInit) gStartPos = getMeme().lines[getMeme().selectedLineIdx].pos
     })
 }
 function renderText(isLineNew = false) {
@@ -58,11 +59,13 @@ function renderText(isLineNew = false) {
 
     gCtx.fillStyle = getMeme().lines[0].color
     gCtx.font = `${firstLine.size}px arial`
-    drawText(firstLine.txt, positions[0].x, positions[0].y)
+    // drawText(firstLine.txt, positions[0].x, positions[0].y)
+    drawText(firstLine.txt, firstLine.pos.x, firstLine.pos.y)
 
     gCtx.fillStyle = getMeme().lines[1].color
     gCtx.font = `${secondLine.size}px arial`
-    drawText(secondLine.txt, positions[1].x, positions[1].y)
+    // drawText(secondLine.txt, positions[1].x, positions[1].y)
+    drawText(secondLine.txt, secondLine.pos.x, secondLine.pos.y)
 
     rest.forEach((line, idx) => {
         gCtx.fillStyle = line.color
@@ -101,7 +104,7 @@ function drawRectAround(pos, idx, isNoRect) {
 function onRectClick(ev) {
     const { offsetX, offsetY, clientX, clientY } = ev
 
-    const line = isRectClicked(ev)
+    const line = clickedLine(ev)
 
     // const line = getMeme().lines.find(line => {
     //     // var { x, y } = line.pos
@@ -128,32 +131,6 @@ function onRectClick(ev) {
     else renderMeme(false, false, true)
 }
 
-function isRectClicked(ev) {
-    const { offsetX, offsetY, clientX, clientY } = ev
-
-    const line = getMeme().lines.find(line => {
-        // var { x, y } = line.pos
-        const size = line.size
-        gCtx.font = size + "px arial"
-        const textMetrics = gCtx.measureText(line.txt)
-        // console.log('textMetrics', textMetrics)
-        const width = textMetrics.width
-        const height = textMetrics.actualBoundingBoxAscent
-        // console.log('width', width)
-        // console.log('height', height)
-        const rectX = line.pos.x - (width / 2) - 10
-        const rectY = line.pos.y - height - 10
-        // console.log('offsetX', offsetX)
-        // console.log('offsetY', offsetY)
-        // console.log('rectX', rectX)
-        // console.log('rectY', rectY)
-
-        return (offsetX >= rectX && offsetX <= rectX + width + 20 &&
-            offsetY >= rectY && offsetY <= rectY + height * 2 + 20)
-    })
-
-    return line
-}
 
 function onChangeTxt(val) {
     setLineTxt(val)
@@ -232,46 +209,48 @@ function onDownload() {
 }
 
 function onDown(ev) {
-
+    console.log('mousedown')
     // Save the position we started from...
     // Get the event position from mouse or touch
     gStartPos = getEvPos(ev)
+    console.log('gStartPos', gStartPos)
+    if (!isClicked(gStartPos)) return
 
-    if (!isCircleClicked(gStartPos)) return
-
-    setCircleDrag(true)
+    setRectDrag(true)
     document.body.style.cursor = 'grabbing'
+    console.log('ev.button', ev.button)
+    if (ev.button === 2) {
+        ev.preventDefault()
+        console.log('right click')
+    }
 }
 
 function onMove(ev) {
-    const { isDrag } = getCircle()
+    const { isDrag } = getMeme()
     if (!isDrag) return
-
+    console.log('isDrag', isDrag)
     const pos = getEvPos(ev)
-
+    console.log('gStartPos.x', gStartPos.x)
+    console.log('gStartPos.y', gStartPos.y)
     // Calc the delta, the diff we moved
     const dx = pos.x - gStartPos.x
     const dy = pos.y - gStartPos.y
+    console.log('dx', dx)
+    console.log('dy', dy)
 
-    moveCircle(dx, dy)
+
+    moveRect(dx, dy)
 
     // Save the last pos, we remember where we`ve been and move accordingly
     gStartPos = pos
 
     // The canvas is rendered again after every move
-    renderCanvas()
+    renderMeme()
 }
 
 function onUp() {
-    setCircleDrag(false)
-    document.body.style.cursor = 'grab'
-}
-
-function resizeCanvas() {
-    const elContainer = document.querySelector('.canvas-container')
-
-    gElCanvas.width = elContainer.offsetWidth
-    gElCanvas.height = elContainer.offsetHeight
+    setRectDrag(false)
+    document.body.style.cursor = 'auto'
 }
 
 function getEvPos(ev) {
@@ -298,4 +277,63 @@ function getEvPos(ev) {
             y: ev.offsetY,
         }
     }
+}
+
+function clickedLine(ev) {
+    const { offsetX, offsetY, clientX, clientY } = ev
+
+    const line = getMeme().lines.find(line => {
+        // var { x, y } = line.pos
+        const size = line.size
+        gCtx.font = size + "px arial"
+        const textMetrics = gCtx.measureText(line.txt)
+        // console.log('textMetrics', textMetrics)
+        const width = textMetrics.width
+        const height = textMetrics.actualBoundingBoxAscent
+        // console.log('width', width)
+        // console.log('height', height)
+        const rectX = line.pos.x - (width / 2) - 10
+        const rectY = line.pos.y - height - 10
+        // console.log('offsetX', offsetX)
+        // console.log('offsetY', offsetY)
+        // console.log('rectX', rectX)
+        // console.log('rectY', rectY)
+
+        return (offsetX >= rectX && offsetX <= rectX + width + 20 &&
+            offsetY >= rectY && offsetY <= rectY + height * 2 + 20)
+    })
+
+    return line
+}
+
+function isClicked(pos) {
+    // console.log('pos', pos)
+    // const { pos: posX, pos: posY } = pos
+    const posX = pos.x
+    const posY = pos.y
+    // console.log('posX', posX)
+    // console.log('posY', posY)
+
+    const line = getMeme().lines[getMeme().selectedLineIdx]
+    console.log('line', line)
+    // var { x, y } = line.pos
+    const size = line.size
+    gCtx.font = size + "px arial"
+    const textMetrics = gCtx.measureText(line.txt)
+    // console.log('textMetrics', textMetrics)
+    const width = textMetrics.width
+    const height = textMetrics.actualBoundingBoxAscent
+    // console.log('width', width)
+    // console.log('height', height)
+    const rectX = line.pos.x - (width / 2) - 10
+    const rectY = line.pos.y - height - 10
+    // console.log('offsetX', offsetX)
+    // console.log('offsetY', offsetY)
+    // console.log('rectX', rectX)
+    // console.log('rectY', rectY)
+
+    const isClicked = (posX >= rectX && posX <= rectX + width + 20 &&
+        posY >= rectY && posY <= rectY + height * 2 + 20)
+    console.log('isRectClicked', isClicked)
+    return isClicked
 }

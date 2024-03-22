@@ -28,6 +28,7 @@ var gMeme = {
         { txt: 'I enjoy eating Falafel', size: 20, color: '#ff0000' },
     ],
     // downloadClicked: false
+    isDrag: false,
 }
 
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
@@ -73,4 +74,13 @@ function setFontSize(dir) {
 
 function setImg(id) {
     gMeme.selectedImgId = id
+}
+
+function moveRect(dx, dy) {
+    gMeme.lines[gMeme.selectedLineIdx].pos.x += dx
+    gMeme.lines[gMeme.selectedLineIdx].pos.y += dy
+}
+
+function setRectDrag(isDrag) {
+    gMeme.isDrag = isDrag
 }

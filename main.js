@@ -2,6 +2,9 @@
 
 var gElCanvas
 var gCtx
+let gStartPos
+
+const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
 
 function onInit() {
     initMeme()
@@ -18,16 +21,45 @@ function initCanvas() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
 
+    // addListeners()
     resizeCanvas()
-    window.addEventListener('resize', () => {
-        const isEditorHidden = document.querySelector('.editor').classList.contains('hidden')
 
-        if (!isEditorHidden) {
-            resizeCanvas()
-            renderMeme()
-        }
-    })
+    // window.addEventListener('resize', () => {
+    //     const isEditorHidden = document.querySelector('.editor').classList.contains('hidden')
+
+    //     if (!isEditorHidden) {
+    //         resizeCanvas()
+    //         renderMeme()
+    //     }
+    // })
 }
+
+function addListeners() {
+    addMouseListeners()
+    addTouchListeners()
+
+    // window.addEventListener('resize', () => {
+    //     resizeCanvas()
+
+    //     const center = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
+    //     createCircle(center)
+
+    //     renderCanvas()
+    // })
+}
+
+function addMouseListeners() {
+    gElCanvas.addEventListener('mousedown', onDown)
+    gElCanvas.addEventListener('mousemove', onMove)
+    gElCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+    gElCanvas.addEventListener('touchstart', onDown)
+    gElCanvas.addEventListener('touchmove', onMove)
+    gElCanvas.addEventListener('touchend', onUp)
+}
+
 
 function initInputs() {
     const elTxtInput = document.querySelector('input[type="text"]')

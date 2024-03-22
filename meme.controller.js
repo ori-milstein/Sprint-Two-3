@@ -3,6 +3,13 @@
 var positions
 
 function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownload = false) {
+    // var rectX
+    // var rectY
+    // if (getMeme().lines[getMeme().selectedLineIdx].pos) rectX = getMeme().lines[getMeme().selectedLineIdx].pos.x - (gCtx.measureText(getMeme().lines[getMeme().selectedLineIdx].txt).width / 2) - 10
+    // if (getMeme().lines[getMeme().selectedLineIdx].pos) rectY = getMeme().lines[getMeme().selectedLineIdx].pos.y - gCtx.measureText(getMeme().lines[getMeme().selectedLineIdx].txt).actualBoundingBoxAscent - 10
+    // console.log('rectX', rectX)
+    // console.log('rectY', rectY)
+
     const gallery = document.querySelector('.gallery')
     const editor = document.querySelector('.editor')
 
@@ -13,6 +20,10 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
     const img = new Image()
     img.src = `img/meme-imgs/meme-imgs-square/${meme.selectedImgId}.jpg`
 
+    // const size = getMeme().lines[getMeme().selectedLineIdx].size
+
+    // gCtx.font = size + "px arial"
+
     img.addEventListener("load", () => {
         // coverCanvasWithImg(img)
         initCanvasWidth(img)
@@ -22,8 +33,24 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
         gCtx.textBaseline = 'middle'
         renderText(isLineNew)
 
+        // const size = getMeme().lines[getMeme().selectedLineIdx].size
+
+        // gCtx.font = size + "px arial"
+        // console.log('size', size)
+
+
+
         if (!isNoRect) renderRect(meme.selectedLineIdx)
+
+        // renderRect(meme.selectedLineIdx, isNoRect)
         if (isDownload) onDownload()
+        // const size = getMeme().lines[getMeme().selectedLineIdx].size
+
+        // gCtx.font = size + "px arial"
+        // if (getMeme().lines[getMeme().selectedLineIdx].pos) rectX = getMeme().lines[getMeme().selectedLineIdx].pos.x - (gCtx.measureText(getMeme().lines[getMeme().selectedLineIdx].txt).width / 2) - 10
+        // if (getMeme().lines[getMeme().selectedLineIdx].pos) rectY = getMeme().lines[getMeme().selectedLineIdx].pos.y - gCtx.measureText(getMeme().lines[getMeme().selectedLineIdx].txt).actualBoundingBoxAscent - 10
+        // console.log('rectX', rectX)
+        // console.log('rectY', rectY)
     })
 }
 function renderText(isLineNew = false) {
@@ -57,15 +84,17 @@ function renderRect(idx) {
 
 }
 
-function drawRectAround(pos, idx) {
-    const size = getMeme().lines[getMeme().selectedLineIdx].size + ''
+function drawRectAround(pos, idx, isNoRect) {
+    const size = getMeme().lines[getMeme().selectedLineIdx].size
 
     gCtx.font = size + "px arial"
+    // console.log('size', size)
     const textMetrics = gCtx.measureText(getMeme().lines[idx].txt)
     const width = textMetrics.width
     const height = textMetrics.actualBoundingBoxAscent
 
-    console.log(textMetrics)
+    // console.log(textMetrics)
+    // if (isNoRect) return
     drawRect(pos.x - width / 2 - 10, pos.y - height - 10, width + 20, height * 2 + 20)
 }
 
@@ -73,18 +102,26 @@ function onRectClick(ev) {
     const { offsetX, offsetY, clientX, clientY } = ev
 
     const line = getMeme().lines.find(line => {
-        var { x, y } = line.pos
+        // var { x, y } = line.pos
+        const size = line.size
+        gCtx.font = size + "px arial"
         const textMetrics = gCtx.measureText(line.txt)
+        // console.log('textMetrics', textMetrics)
         const width = textMetrics.width
         const height = textMetrics.actualBoundingBoxAscent
-        const rectX = line.pos.x - width / 2 - 10
+        // console.log('width', width)
+        // console.log('height', height)
+        const rectX = line.pos.x - (width / 2) - 10
         const rectY = line.pos.y - height - 10
-
+        // console.log('offsetX', offsetX)
+        // console.log('offsetY', offsetY)
+        // console.log('rectX', rectX)
+        // console.log('rectY', rectY)
 
         return (offsetX >= rectX && offsetX <= rectX + width + 20 &&
             offsetY >= rectY && offsetY <= rectY + height * 2 + 20)
     })
-
+    // console.log('line', line)
     if (line) onSwitchLine(getMeme().lines.indexOf(line))
     else renderMeme(false, false, true)
 }
@@ -107,11 +144,19 @@ function onChangeColor(val, idx = getMeme().selectedLineIdx) {
 
 function onChangeFontSize(dir) {
     setFontSize(dir)
-    console.log('getMeme().lines[getMeme().selectedLineIdx].size', getMeme().lines[getMeme().selectedLineIdx].size)
+    // console.log('getMeme().lines[getMeme().selectedLineIdx].size', getMeme().lines[getMeme().selectedLineIdx].size)
     // const size = getMeme().lines[getMeme().selectedLineIdx].size + ''
 
     // gCtx.font = size + "px arial"
     // console.log('gCtx.font', gCtx.font)
+
+    // var rectX = getMeme().lines[0].pos.x - gCtx.measureText(getMeme().lines[0]).width / 2 - 10
+    // var rectY = getMeme().lines[0].pos.y - gCtx.measureText(getMeme().lines[0]).actualBoundingBoxAscent - 10
+
+    // var rectX = getMeme().lines[getMeme().lines.length - 1].pos.x - gCtx.measureText(getMeme().lines[getMeme().lines.length - 1]).width / 2 - 10
+    // var rectY = getMeme().lines[getMeme().lines.length - 1].pos.y - gCtx.measureText(getMeme().lines[getMeme().lines.length - 1]).actualBoundingBoxAscent - 10
+    // console.log('rectX after font change', rectX)
+    // console.log('rectY after font change', rectY)
 
     renderMeme()
 }

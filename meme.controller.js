@@ -25,8 +25,8 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
     // gCtx.font = size + "px arial"
 
     img.addEventListener("load", () => {
-        // coverCanvasWithImg(img)
-        initCanvasWidth(img)
+        // initCanvasWidth(img)
+        coverCanvasWithImg(img)
         if (isInit) positions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }]
         positions.forEach((pos, idx) => updatePosition(pos, idx))
         // getMeme().lines.forEach(line => updateCirclePos)

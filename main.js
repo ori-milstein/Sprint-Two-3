@@ -23,16 +23,17 @@ function initCanvas() {
     gCtx = gElCanvas.getContext('2d')
 
     addListeners()
-    resizeCanvas()
+    // initCanvasWidth()
+    // resizeCanvas()
 
-    // window.addEventListener('resize', () => {
-    //     const isEditorHidden = document.querySelector('.editor').classList.contains('hidden')
+    window.addEventListener('resize', () => {
+        const isEditorHidden = document.querySelector('.editor').classList.contains('hidden')
 
-    //     if (!isEditorHidden) {
-    //         resizeCanvas()
-    //         renderMeme()
-    //     }
-    // })
+        if (!isEditorHidden) {
+            resizeCanvas()
+            renderMeme()
+        }
+    })
 }
 
 function addListeners() {

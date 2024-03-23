@@ -233,11 +233,12 @@ function onDown(ev) {
 
     if (isRect) {
         console.log('rect is clicked')
-        setRectDrag(true)
+        setDrag(true)
     }
     if (isCircle) {
         console.log('cicle is clicked')
-        setCircle(true)
+        setDrag(true)
+        setCirclePicked(true)
     }
     document.body.style.cursor = 'grabbing'
     console.log('ev.button', ev.button)
@@ -247,10 +248,10 @@ function onDown(ev) {
 }
 
 function onMove(ev) {
-    const { isDrag, isCircle } = getMeme()
-    if (!isDrag && !isCircle) return
+    const { isDrag, isCirclePicked } = getMeme()
+    if (!isDrag && !isCirclePicked) return
     console.log('isDrag', isDrag)
-    console.log('isCircle', isCircle)
+    console.log('isCircle', isCirclePicked)
     const pos = getEvPos(ev)
     console.log('gStartPos.x', gStartPos.x)
     console.log('gStartPos.y', gStartPos.y)
@@ -261,8 +262,8 @@ function onMove(ev) {
     console.log('dy', dy)
 
 
-    if (isDrag && !isCircle) moveRect(dx, dy)
-    else if (isDrag && isCircle) {
+    if (isDrag && !isCirclePicked) moveRect(dx, dy)
+    else if (isDrag && isCirclePicked) {
         onChangeFontSize(-dx)
     }
 
@@ -274,8 +275,8 @@ function onMove(ev) {
 }
 
 function onUp() {
-    setRectDrag(false)
-    setCircle(false)
+    setDrag(false)
+    setCirclePicked(false)
     document.body.style.cursor = 'auto'
 }
 

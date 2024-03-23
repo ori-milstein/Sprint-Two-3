@@ -29,7 +29,7 @@ var gMeme = {
     ],
     // downloadClicked: false
     isDrag: false,
-    isCircle: false,
+    isCirclePicked: false,
 }
 
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
@@ -83,12 +83,12 @@ function moveRect(dx, dy) {
     gMeme.lines[gMeme.selectedLineIdx].pos.y += dy
 }
 
-function setRectDrag(isDrag) {
+function setDrag(isDrag) {
     gMeme.isDrag = isDrag
 }
 
-function setCircle(isCircle) {
-    gMeme.isCircle = isCircle
+function setCirclePicked(isCircle) {
+    gMeme.isCirclePicked = isCircle
 }
 
 function updateCirclePos(x, y) {

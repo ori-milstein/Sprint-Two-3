@@ -225,11 +225,14 @@ function onDown(ev) {
     gStartPos = getEvPos(ev)
     console.log('gStartPos', gStartPos)
     // console.log('gCircle', gCircle)
-    const isRect = isRectClicked(gStartPos)
+    const isRect = isRectClicked2(gStartPos)
     console.log('isRect', isRect)
     const isCircle = isCircleClicked(gStartPos)
     console.log('isCircle', isCircle)
-    if (!isRect && !isCircle) return
+    if (!isRect && !isCircle) {
+        // ev.preventDefault()
+        return
+    }
 
     if (isRect) {
         ev.preventDefault()
@@ -365,4 +368,32 @@ function isRectClicked(pos) {
         posY >= rectY && posY <= rectY + height * 2 + 20)
     console.log('isRectClicked', isClicked)
     return isClicked
+}
+
+function isRectClicked2(ev) {
+    const { x, y, clientX, clientY } = ev
+
+    const line = getMeme().lines.find(line => {
+        // var { x, y } = line.pos
+        const size = line.size
+        gCtx.font = size + "px arial"
+        const textMetrics = gCtx.measureText(line.txt)
+        // console.log('textMetrics', textMetrics)
+        const width = textMetrics.width
+        const height = textMetrics.actualBoundingBoxAscent
+        // console.log('width', width)
+        // console.log('height', height)
+        const rectX = line.pos.x - (width / 2) - 10
+        const rectY = line.pos.y - height - 10
+        // console.log('offsetX', offsetX)
+        // console.log('offsetY', offsetY)
+        // console.log('rectX', rectX)
+        // console.log('rectY', rectY)
+
+        return (x >= rectX && x <= rectX + width + 20 &&
+            y >= rectY && y <= rectY + height * 2 + 20)
+    })
+
+    if (line) return true
+    else return false
 }

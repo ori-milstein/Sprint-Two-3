@@ -232,10 +232,12 @@ function onDown(ev) {
     if (!isRect && !isCircle) return
 
     if (isRect) {
+        ev.preventDefault()
         console.log('rect is clicked')
         setDrag(true)
     }
     if (isCircle) {
+        ev.preventDefault()
         console.log('cicle is clicked')
         setDrag(true)
         setCirclePicked(true)

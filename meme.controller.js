@@ -284,7 +284,7 @@ function getEvPos(ev) {
 
     if (TOUCH_EVENTS.includes(ev.type)) {
 
-        ev.preventDefault()         // Prevent triggering the mouse events
+        // ev.preventDefault()         // Prevent triggering the mouse events
         ev = ev.changedTouches[0]   // Gets the first touch point
 
         // Calculate the touch position inside the canvas

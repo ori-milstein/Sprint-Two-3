@@ -24,11 +24,12 @@ var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: [
-        { txt: 'I sometimes eat Falafel', size: 20, color: '#ff0000' },
-        { txt: 'I enjoy eating Falafel', size: 20, color: '#ff0000' },
+        { txt: 'I sometimes eat Falafel', size: 20, color: '#ff0000', circlePos: {} },
+        { txt: 'I enjoy eating Falafel', size: 20, color: '#ff0000', circlePos: {} },
     ],
     // downloadClicked: false
     isDrag: false,
+    isCircle: false,
 }
 
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
@@ -68,8 +69,9 @@ function setLineColor(color, lineIdx = gMeme.selectedLineIdx) {
     gMeme.lines[lineIdx].color = color
 }
 
-function setFontSize(dir) {
-    gMeme.lines[gMeme.selectedLineIdx].size += dir * 2.5
+function setFontSize(by, discrete) {
+    if (discrete) gMeme.lines[gMeme.selectedLineIdx].size += by * 2.5
+    else gMeme.lines[gMeme.selectedLineIdx].size += by / 5
 }
 
 function setImg(id) {
@@ -83,4 +85,25 @@ function moveRect(dx, dy) {
 
 function setRectDrag(isDrag) {
     gMeme.isDrag = isDrag
+}
+
+function setCircle(isCircle) {
+    gMeme.isCircle = isCircle
+}
+
+function updateCirclePos(x, y) {
+    gMeme.lines[gMeme.selectedLineIdx].circlePos = { x, y }
+}
+
+function isCircleClicked(clickedPos) {
+    const { x, y } = gMeme.lines[gMeme.selectedLineIdx].circlePos
+    console.log('x', x)
+    console.log('y', y)
+    // Calc the distance between two dots
+    const distance =
+        Math.sqrt((x - clickedPos.x) ** 2 + (y - clickedPos.y) ** 2)
+
+    console.log('isCircleClicked', distance <= gMeme.lines[gMeme.selectedLineIdx].size)
+    //If its smaller then the radius of the circle we are inside
+    return distance <= gMeme.lines[gMeme.selectedLineIdx].size
 }

@@ -3,6 +3,7 @@
 var gElCanvas
 var gCtx
 let gStartPos = getMeme().lines[getMeme().selectedLineIdx].pos
+let gCircle = getMeme().lines[getMeme().selectedLineIdx].circlePos
 
 const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
 
@@ -103,14 +104,25 @@ function drawText(text, x, y) {
 
 function drawRect(x, y, width, height) {
     const oldSyle = gCtx.strokeStyle
+
+    gCtx.beginPath()
+    gCtx.fillStyle = 'lightblack'
     gCtx.strokeStyle = 'lightblack'
     gCtx.setLineDash([10, 10])
     gCtx.lineWidth = 1.5
-    gCtx.beginPath()
     gCtx.strokeRect(x, y, width, height)
     gCtx.closePath()
 }
 
+function drawCircle(x, y) {
+    gCtx.beginPath()
+    gCtx.fillStyle = 'lightblack'
+    gCtx.setLineDash([])
+    gCtx.arc(x, y, 6, 0, 2 * Math.PI)
+    gCtx.stroke()
+    gCtx.fill()
+    gCtx.closePath()
+}
 
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')

@@ -29,6 +29,8 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
         initCanvasWidth(img)
         if (isInit) positions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }]
         positions.forEach((pos, idx) => updatePosition(pos, idx))
+        // getMeme().lines.forEach(line => updateCirclePos)
+        // /*if (isInit)*/ gCircle = getMeme().lines[0].circlePos
         gCtx.textAlign = 'center'
         gCtx.textBaseline = 'middle'
         renderText(isLineNew)
@@ -56,23 +58,28 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
 }
 function renderText(isLineNew = false) {
     const [firstLine, secondLine, ...rest] = getMeme().lines
-
+    gCtx.beginPath()
     gCtx.fillStyle = getMeme().lines[0].color
     gCtx.font = `${firstLine.size}px arial`
     // drawText(firstLine.txt, positions[0].x, positions[0].y)
     drawText(firstLine.txt, firstLine.pos.x, firstLine.pos.y)
+    gCtx.closePath()
 
+    gCtx.beginPath()
     gCtx.fillStyle = getMeme().lines[1].color
     gCtx.font = `${secondLine.size}px arial`
     // drawText(secondLine.txt, positions[1].x, positions[1].y)
     drawText(secondLine.txt, secondLine.pos.x, secondLine.pos.y)
+    gCtx.closePath()
 
     rest.forEach((line, idx) => {
+        gCtx.beginPath()
         gCtx.fillStyle = line.color
         gCtx.font = `${line.size}px arial`
         drawText(line.txt, line.pos.x, line.pos.y)
+        gCtx.closePath()
     })
-
+    // gCtx.closePath()
     if (isLineNew) onSwitchLine(getMeme().selectedLineIdx, isLineNew)
 }
 
@@ -99,6 +106,8 @@ function drawRectAround(pos, idx, isNoRect) {
     // console.log(textMetrics)
     // if (isNoRect) return
     drawRect(pos.x - width / 2 - 10, pos.y - height - 10, width + 20, height * 2 + 20)
+    updateCirclePos(pos.x - width / 2 - 10, pos.y - 2)
+    drawCircle(pos.x - width / 2 - 10, pos.y - 2)
 }
 
 function onRectClick(ev) {
@@ -148,8 +157,9 @@ function onChangeColor(val, idx = getMeme().selectedLineIdx) {
     renderMeme()
 }
 
-function onChangeFontSize(dir) {
-    setFontSize(dir)
+function onChangeFontSize(by, discrete = false) {
+    if (discrete) setFontSize(by, discrete)
+    else setFontSize(by)
     // console.log('getMeme().lines[getMeme().selectedLineIdx].size', getMeme().lines[getMeme().selectedLineIdx].size)
     // const size = getMeme().lines[getMeme().selectedLineIdx].size + ''
 
@@ -214,21 +224,33 @@ function onDown(ev) {
     // Get the event position from mouse or touch
     gStartPos = getEvPos(ev)
     console.log('gStartPos', gStartPos)
-    if (!isClicked(gStartPos)) return
+    // console.log('gCircle', gCircle)
+    const isRect = isRectClicked(gStartPos)
+    console.log('isRect', isRect)
+    const isCircle = isCircleClicked(gStartPos)
+    console.log('isCircle', isCircle)
+    if (!isRect && !isCircle) return
 
-    setRectDrag(true)
+    if (isRect) {
+        console.log('rect is clicked')
+        setRectDrag(true)
+    }
+    if (isCircle) {
+        console.log('cicle is clicked')
+        setCircle(true)
+    }
     document.body.style.cursor = 'grabbing'
     console.log('ev.button', ev.button)
     if (ev.button === 2) {
-        ev.preventDefault()
         console.log('right click')
     }
 }
 
 function onMove(ev) {
-    const { isDrag } = getMeme()
-    if (!isDrag) return
+    const { isDrag, isCircle } = getMeme()
+    if (!isDrag && !isCircle) return
     console.log('isDrag', isDrag)
+    console.log('isCircle', isCircle)
     const pos = getEvPos(ev)
     console.log('gStartPos.x', gStartPos.x)
     console.log('gStartPos.y', gStartPos.y)
@@ -239,7 +261,10 @@ function onMove(ev) {
     console.log('dy', dy)
 
 
-    moveRect(dx, dy)
+    if (isDrag && !isCircle) moveRect(dx, dy)
+    else if (isDrag && isCircle) {
+        onChangeFontSize(-dx)
+    }
 
     // Save the last pos, we remember where we`ve been and move accordingly
     gStartPos = pos
@@ -250,6 +275,7 @@ function onMove(ev) {
 
 function onUp() {
     setRectDrag(false)
+    setCircle(false)
     document.body.style.cursor = 'auto'
 }
 
@@ -306,7 +332,7 @@ function clickedLine(ev) {
     return line
 }
 
-function isClicked(pos) {
+function isRectClicked(pos) {
     // console.log('pos', pos)
     // const { pos: posX, pos: posY } = pos
     const posX = pos.x

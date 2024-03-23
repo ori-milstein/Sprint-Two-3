@@ -9,14 +9,19 @@
 </head>
 
 <body onload="onInit()">
+    <div class="main-screen hidden" onclick="onToggleMenu()"></div>
+
     <section class="layout">
         <header class="header">
             <span>Meme Generator</span>
-            <ul>
-                <li><a href="#" onclick="renderGallery()">Gallery</a></li>
-                <li><a href="#" onclick="renderGallery()">Saved</a></li>
-                <li><a href="#" onclick="renderMeme()">Randomize</a></li>
-            </ul>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="renderGallery()">Gallery</a></li>
+                    <li><a href="#" onclick="renderGallery()">Saved</a></li>
+                    <li><a href="#" onclick="renderMeme()">Randomize</a></li>
+                </ul>
+            </nav>
+            <a href="#" class="hamburger" onclick="onToggleMenu()">&#127828;</a>
         </header>
 
         <div class="main">
@@ -79,7 +84,12 @@
 
 
     </section>
-
+    <script>
+        function onToggleMenu() {
+            document.querySelector('body').classList.toggle('menu-open')
+            document.querySelector('.main-screen').classList.toggle('hidden')
+        }
+    </script>
     <script src="meme.service.js"></script>
     <script src="main.js"></script>
     <script src="meme.controller.js"></script>

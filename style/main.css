@@ -23,8 +23,9 @@ body {
 
 header {
     grid-area: header;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    /* grid-template-columns: 286px 1fr; */
+    justify-content: space-between;
     align-items: center;
     border-radius: 40px;
     margin-inline: 5px;
@@ -83,6 +84,7 @@ header span {
 }
 
 canvas {
+    transform: rotate3d(0, 0, 0);
     background-color: darkgray;
 }
 
@@ -246,6 +248,10 @@ input[type="color"] {
     height: 200px;
 }
 
+.hamburger {
+    display: none;
+}
+
 .hidden {
     display: none;
 }
@@ -268,4 +274,64 @@ input[type="color"] {
     .canvas-container {
         align-self: center;
     }
+}
+
+@media screen and (width<=785px) {
+    nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100dvh;
+        min-width: 200px;
+        background-color: rgb(34 37 44 / 90%);
+        transform: translateX(100%);
+        transition: 0.6s;
+    }
+
+    nav ul {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        /* margin: 0; */
+        gap: 60px;
+    }
+
+    nav li {
+        /* display: block; */
+        /* display: flex; */
+        width: 100%;
+    }
+
+    li a {
+        display: flex;
+        justify-content: center;
+        padding: 8px 10px;
+    }
+
+    body.menu-open nav {
+        transform: translateX(0);
+        transition: 0.6s;
+    }
+
+    .hamburger {
+        /* position: relative;
+        top: -4px; */
+        display: flex;
+        justify-content: end;
+        align-self: start;
+        text-decoration: none;
+        font-size: 40px;
+    }
+
+    .hamburger:hover {
+        /* transform: rotate(180deg); */
+        /* transition: 1s; */
+    }
+}
+
+.main-screen {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }

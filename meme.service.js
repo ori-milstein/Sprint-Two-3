@@ -96,15 +96,19 @@ function updateCirclePos(x, y) {
     gMeme.lines[gMeme.selectedLineIdx].circlePos = { x, y }
 }
 
-function isCircleClicked(clickedPos) {
-    const { x, y } = gMeme.lines[gMeme.selectedLineIdx].circlePos
+function isCircleClicked(clickedPos, line) {
+    // const { x, y } = gMeme.lines[gMeme.selectedLineIdx].circlePos
+    const { x, y } = line.circlePos
     console.log('x', x)
     console.log('y', y)
     // Calc the distance between two dots
     const distance =
         Math.sqrt((x - clickedPos.x) ** 2 + (y - clickedPos.y) ** 2)
 
-    console.log('isCircleClicked', distance <= gMeme.lines[gMeme.selectedLineIdx].size)
+    console.log('distance', distance)
+    console.log('isCircleClicked', distance <= 6)
     //If its smaller then the radius of the circle we are inside
-    return distance <= gMeme.lines[gMeme.selectedLineIdx].size
+    if (distance <= 6) setCirclePicked(true)
+
+    return distance <= 6
 }

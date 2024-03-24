@@ -137,7 +137,11 @@ function onCanvasClick(ev) {
     // })
     console.log('line', line)
     if (line) onSwitchLine(getMeme().lines.indexOf(line))
-    else renderMeme(false, false, true)
+    else {
+        setCirclePicked(false)
+        renderMeme(false, false, true)
+    }
+    console.log('getMeme().isCirclePicked', getMeme().isCirclePicked)
     return line
 }
 
@@ -267,9 +271,6 @@ function onDown2(ev) {
     const line = onCanvasClick()
 
     if (line) {
-        //     ev.preventDefault()
-        //     onCanvasClick(ev)
-        //     console.log('rect is clicked')
         setDrag(true)
     }
     // if (isCircle) {
@@ -279,11 +280,7 @@ function onDown2(ev) {
     //     setCirclePicked(true)
     // }
     // document.body.style.cursor = 'grabbing'
-    // console.log('ev.button', ev.button)
-    // if (ev.button === 2) {
-    //     console.log('right click')
-    // }
-    // renderMeme()
+
 }
 
 function onMove(ev) {
@@ -300,10 +297,12 @@ function onMove(ev) {
     console.log('dx', dx)
     console.log('dy', dy)
 
+    const circleDx = pos.x - getMeme().lines[getMeme().selectedLineIdx].circlePos.x
 
+    console.log('isCirclePicked', isCirclePicked)
     if (isDrag && !isCirclePicked) moveRect(dx, dy)
     else if (isDrag && isCirclePicked) {
-        onChangeFontSize(-dx)
+        onChangeFontSize(-circleDx)
     }
 
     // Save the last pos, we remember where we`ve been and move accordingly
@@ -347,7 +346,7 @@ function getEvPos(ev) {
 
 function clickedLine() {
     // const { offsetX, offsetY, clientX, clientY } = ev
-    const pos = gStartPos
+    const clickedPos = gStartPos
 
 
     const line = getMeme().lines.find(line => {
@@ -367,8 +366,11 @@ function clickedLine() {
         // console.log('rectX', rectX)
         // console.log('rectY', rectY)
 
-        return (pos.x >= rectX && pos.x <= rectX + width + 20 &&
-            pos.y >= rectY && pos.y <= rectY + height * 2 + 20)
+        // const distance =
+        //     Math.sqrt((line.pos.x - clickedPos.x) ** 2 + (line.pos.y - clickedPos.y) ** 2)
+
+        return (isCircleClicked(clickedPos, line)) || (clickedPos.x >= rectX && clickedPos.x <= rectX + width + 20 &&
+            clickedPos.y >= rectY && clickedPos.y <= rectY + height * 2 + 20)
     })
 
     return line

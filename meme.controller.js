@@ -138,6 +138,7 @@ function onCanvasClick(ev) {
     console.log('line', line)
     if (line) onSwitchLine(getMeme().lines.indexOf(line))
     else renderMeme(false, false, true)
+    return line
 }
 
 
@@ -263,14 +264,14 @@ function onDown2(ev) {
     console.log('gStartPos', gStartPos)
     // console.log('gCircle', gCircle)
 
-    onCanvasClick()
+    const line = onCanvasClick()
 
-    // if (isRect) {
-    //     ev.preventDefault()
-    //     onCanvasClick(ev)
-    //     console.log('rect is clicked')
-    //     setDrag(true)
-    // }
+    if (line) {
+        //     ev.preventDefault()
+        //     onCanvasClick(ev)
+        //     console.log('rect is clicked')
+        setDrag(true)
+    }
     // if (isCircle) {
     //     ev.preventDefault()
     //     console.log('cicle is clicked')

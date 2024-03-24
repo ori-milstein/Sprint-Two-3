@@ -51,13 +51,13 @@ function addListeners() {
 }
 
 function addMouseListeners() {
-    gElCanvas.addEventListener('mousedown', onDown)
+    gElCanvas.addEventListener('mousedown', onDown2)
     gElCanvas.addEventListener('mousemove', onMove)
     gElCanvas.addEventListener('mouseup', onUp)
 }
 
 function addTouchListeners() {
-    gElCanvas.addEventListener('touchstart', onDown)
+    gElCanvas.addEventListener('touchstart', onDown2)
     gElCanvas.addEventListener('touchmove', onMove)
     gElCanvas.addEventListener('touchend', onUp)
 }

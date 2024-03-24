@@ -110,10 +110,10 @@ function drawRectAround(pos, idx, isNoRect) {
     drawCircle(pos.x - width / 2 - 10, pos.y - 2)
 }
 
-function onRectClick(ev) {
-    const { offsetX, offsetY, clientX, clientY } = ev
+function onCanvasClick(ev) {
+    // const { offsetX, offsetY, clientX, clientY } = ev
 
-    const line = clickedLine(ev)
+    const line = clickedLine()
 
     // const line = getMeme().lines.find(line => {
     //     // var { x, y } = line.pos
@@ -135,7 +135,7 @@ function onRectClick(ev) {
     //     return (offsetX >= rectX && offsetX <= rectX + width + 20 &&
     //         offsetY >= rectY && offsetY <= rectY + height * 2 + 20)
     // })
-    // console.log('line', line)
+    console.log('line', line)
     if (line) onSwitchLine(getMeme().lines.indexOf(line))
     else renderMeme(false, false, true)
 }
@@ -231,11 +231,13 @@ function onDown(ev) {
     console.log('isCircle', isCircle)
     if (!isRect && !isCircle) {
         // ev.preventDefault()
+        renderMeme()
         return
     }
 
     if (isRect) {
         ev.preventDefault()
+        onCanvasClick(ev)
         console.log('rect is clicked')
         setDrag(true)
     }
@@ -250,6 +252,37 @@ function onDown(ev) {
     if (ev.button === 2) {
         console.log('right click')
     }
+    renderMeme()
+}
+
+function onDown2(ev) {
+    console.log('mousedown')
+    // Save the position we started from...
+    // Get the event position from mouse or touch
+    gStartPos = getEvPos(ev)
+    console.log('gStartPos', gStartPos)
+    // console.log('gCircle', gCircle)
+
+    onCanvasClick()
+
+    // if (isRect) {
+    //     ev.preventDefault()
+    //     onCanvasClick(ev)
+    //     console.log('rect is clicked')
+    //     setDrag(true)
+    // }
+    // if (isCircle) {
+    //     ev.preventDefault()
+    //     console.log('cicle is clicked')
+    //     setDrag(true)
+    //     setCirclePicked(true)
+    // }
+    // document.body.style.cursor = 'grabbing'
+    // console.log('ev.button', ev.button)
+    // if (ev.button === 2) {
+    //     console.log('right click')
+    // }
+    // renderMeme()
 }
 
 function onMove(ev) {
@@ -289,7 +322,7 @@ function getEvPos(ev) {
 
     if (TOUCH_EVENTS.includes(ev.type)) {
 
-        // ev.preventDefault()         // Prevent triggering the mouse events
+        ev.preventDefault()         // Prevent triggering the mouse events
         ev = ev.changedTouches[0]   // Gets the first touch point
 
         // Calculate the touch position inside the canvas
@@ -311,8 +344,10 @@ function getEvPos(ev) {
     }
 }
 
-function clickedLine(ev) {
-    const { offsetX, offsetY, clientX, clientY } = ev
+function clickedLine() {
+    // const { offsetX, offsetY, clientX, clientY } = ev
+    const pos = gStartPos
+
 
     const line = getMeme().lines.find(line => {
         // var { x, y } = line.pos
@@ -331,8 +366,8 @@ function clickedLine(ev) {
         // console.log('rectX', rectX)
         // console.log('rectY', rectY)
 
-        return (offsetX >= rectX && offsetX <= rectX + width + 20 &&
-            offsetY >= rectY && offsetY <= rectY + height * 2 + 20)
+        return (pos.x >= rectX && pos.x <= rectX + width + 20 &&
+            pos.y >= rectY && pos.y <= rectY + height * 2 + 20)
     })
 
     return line

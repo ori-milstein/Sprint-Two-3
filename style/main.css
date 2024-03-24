@@ -66,7 +66,9 @@ header span {
 }
 
 .main {
-    margin-inline: 16px;
+    /* margin-inline: 16px; */
+    padding-inline: 16px;
+    width: 100dvw;
 }
 
 .editor {
@@ -81,17 +83,20 @@ header span {
 
 .canvas-container {
     justify-self: center;
+    width: 100%;
 }
 
 canvas {
     transform: rotate3d(0, 0, 0);
     background-color: darkgray;
+    /* width: 100%; */
 }
 
 .buttons {
     place-self: center;
     background-color: #383b42;
-    height: fit-content;
+    /* height: fit-content; */
+    width: 100%;
     padding-block: 30px;
     padding-inline: 50px;
     border-radius: 30px;
@@ -110,7 +115,7 @@ canvas {
 
 input[type="text"] {
     display: block;
-    font-size: 1.7em;
+    /* font-size: 1.7em; */
     outline: none;
     border-radius: 40px;
     padding-block: 20px;
@@ -124,7 +129,7 @@ input[type="text"]:checked {
 
 .main-buttons {
     justify-self: center;
-    width: clac(53px * 3 + 30px);
+    /* width: clac(53px * 3 + 30px); */
     display: grid;
     grid-auto-flow: column;
     gap: 10px;
@@ -273,6 +278,7 @@ input[type="color"] {
 
     .canvas-container {
         align-self: center;
+        /* width: 80vw; */
     }
 }
 

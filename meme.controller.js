@@ -2,7 +2,7 @@
 
 var positions
 
-function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownload = false) {
+function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownload = false, isInputFocus = false) {
     // var rectX
     // var rectY
     // if (getMeme().lines[getMeme().selectedLineIdx].pos) rectX = getMeme().lines[getMeme().selectedLineIdx].pos.x - (gCtx.measureText(getMeme().lines[getMeme().selectedLineIdx].txt).width / 2) - 10
@@ -26,6 +26,7 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
 
     img.addEventListener("load", () => {
         // initCanvasWidth(img)
+        resizeCanvas(img)
         coverCanvasWithImg(img)
         if (isInit) positions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }]
         positions.forEach((pos, idx) => updatePosition(pos, idx))
@@ -54,8 +55,11 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
         // console.log('rectX', rectX)
         // console.log('rectY', rectY)
         if (isInit) gStartPos = getMeme().lines[getMeme().selectedLineIdx].pos
+
+        if (isInputFocus) focusTextInput()
     })
 }
+
 function renderText(isLineNew = false) {
     const [firstLine, secondLine, ...rest] = getMeme().lines
     gCtx.beginPath()
@@ -192,22 +196,38 @@ function onAddLine() {
 
 function onSwitchLine(idx, isLineNew = false) {
     const newLineIdx = switchLine(idx)
-    const elTxtInput = document.querySelector('input[type="text"]')
-    const newLineTxt = getMeme().lines[newLineIdx].txt
+    // const elTxtInput = document.querySelector('input[type="text"]')
+    // const newLineTxt = getMeme().lines[newLineIdx].txt
 
     const elColor = document.querySelector('input[type="color"]')
     const newLineColor = getMeme().lines[newLineIdx].color
     const svgPath = document.querySelector('path')
-    const mq = window.matchMedia("(min-width: 768px)");
+    // const mq = window.matchMedia("(min-width: 768px)")
 
 
-    elTxtInput.value = newLineTxt
-    if (mq.matches) elTxtInput.select()
+    // elTxtInput.value = newLineTxt
+    // if (mq.matches) {
+    //     // elTxtInput.focus()
+    //     elTxtInput.select()
+    // }
 
     elColor.value = newLineColor
     svgPath.setAttribute('fill', `${newLineColor}`)
     if (isLineNew) return
-    renderMeme()
+    renderMeme(false, false, false, false, true)
+}
+
+function focusTextInput() {
+    const elTxtInput = document.querySelector('input[type="text"]')
+    const selectedLineTxt = getMeme().lines[getMeme().selectedLineIdx].txt
+    const mq = window.matchMedia("(min-width: 770px)")
+
+
+    elTxtInput.value = selectedLineTxt
+    if (mq.matches) {
+        // elTxtInput.focus()
+        elTxtInput.select()
+    }
 }
 
 function onDownload() {
@@ -273,6 +293,7 @@ function onDown2(ev) {
     if (line) {
         setDrag(true)
     }
+    // onSwitchLine(getMeme())
     // if (isCircle) {
     //     ev.preventDefault()
     //     console.log('cicle is clicked')
@@ -310,12 +331,24 @@ function onMove(ev) {
 
     // The canvas is rendered again after every move
     renderMeme()
+    // onSwitchLine(getMeme().lines[getMeme().selectedLineIdx])
 }
 
 function onUp() {
     setDrag(false)
     setCirclePicked(false)
-    document.body.style.cursor = 'auto'
+    // onSwitchLine(getMeme().lines[getMeme().selectedLineIdx])
+    // const elTxtInput = document.querySelector('input[type="text"]')
+    // const newLineTxt = getMeme().lines[newLineIdx].txt
+    // const mq = window.matchMedia("(min-width: 768px)")
+
+
+    // elTxtInput.value = newLineTxt
+    // if (mq.matches) {
+    //     // elTxtInput.focus()
+    //     elTxtInput.select()
+    // }
+    // document.body.style.cursor = 'auto'
 }
 
 function getEvPos(ev) {

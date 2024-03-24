@@ -61,6 +61,9 @@ function setLineTxt(txt, lineIdx = 0) {
 function switchLine(idx) {
     var { selectedLineIdx, lines } = gMeme
 
+    // if (idx) gMeme.selectedLineIdx = idx
+    // else if (selectedLineIdx === lines.length - 1) { }
+
     gMeme.selectedLineIdx = (idx === undefined) ? (selectedLineIdx === lines.length - 1) ? 0 : ++gMeme.selectedLineIdx : idx
 
     return gMeme.selectedLineIdx

@@ -24,7 +24,7 @@ function initCanvas() {
 
     addListeners()
     // initCanvasWidth()
-    // resizeCanvas()
+    resizeCanvas()
 
     window.addEventListener('resize', () => {
         const isEditorHidden = document.querySelector('.editor').classList.contains('hidden')
@@ -125,10 +125,11 @@ function drawCircle(x, y) {
     gCtx.closePath()
 }
 
-function resizeCanvas() {
+function resizeCanvas(elImg) {
     const elContainer = document.querySelector('.canvas-container')
 
-    gElCanvas.width = elContainer.clientWidth
+    gElCanvas.width = (elImg) ? Math.min(elImg.naturalWidth, elContainer.clientWidth) : elContainer.clientWidth
+
 }
 
 function initCanvasWidth(elImg) {
@@ -139,6 +140,9 @@ function initCanvasWidth(elImg) {
 }
 
 function coverCanvasWithImg(elImg) {
+    // gElCanvas.width = document.querySelector('.canvas-container').width
     gElCanvas.height = (elImg.naturalHeight / elImg.naturalWidth) * gElCanvas.width
+    // gElCanvas.width = (elImg.naturalHeight / elImg.naturalWidth) * gElCanvas.height
+
     gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
 }

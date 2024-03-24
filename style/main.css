@@ -9,26 +9,32 @@ html {
 }
 
 body {
+    /* margin: 30px; */
+    /* display: grid; */
+    /* place-content: center; */
     font-family: schulvokal;
     background-color: RGBA(34, 37, 44, 1);
     background-color: #22252c;
 }
 
 .layout {
+    /* width: 100%; */
     margin-top: 15px;
-    display: grid;
-    grid:
-        "header" 80px "main" 1fr;
+    /* display: grid; */
+    /* grid:
+        "header" 80px "main" 1fr; */
 }
 
 header {
-    grid-area: header;
+    margin: 0 auto;
+    /* grid-area: header; */
     display: flex;
+    width: calc(100% - 10px);
     /* grid-template-columns: 286px 1fr; */
     justify-content: space-between;
     align-items: center;
     border-radius: 40px;
-    margin-inline: 5px;
+    /* margin-inline: 5px; */
     margin-bottom: 18px;
     padding-inline: calc((90 / 1260) * calc(100vw - 10px));
     background-color: rgb(48, 187, 114);
@@ -68,7 +74,7 @@ header span {
 .main {
     /* margin-inline: 16px; */
     padding-inline: 16px;
-    width: 100dvw;
+    width: 100%;
 }
 
 .editor {
@@ -84,6 +90,8 @@ header span {
 .canvas-container {
     justify-self: center;
     width: 100%;
+    display: grid;
+    place-content: center;
 }
 
 canvas {
@@ -96,7 +104,8 @@ canvas {
     place-self: center;
     background-color: #383b42;
     /* height: fit-content; */
-    width: 100%;
+    width: 500px;
+    /* width: 100%; */
     padding-block: 30px;
     padding-inline: 50px;
     border-radius: 30px;
@@ -320,8 +329,8 @@ input[type="color"] {
     }
 
     .hamburger {
-        /* position: relative;
-        top: -4px; */
+        position: relative;
+        top: -6px;
         display: flex;
         justify-content: end;
         align-self: start;
@@ -329,9 +338,9 @@ input[type="color"] {
         font-size: 40px;
     }
 
-    .hamburger:hover {
+    .hamburger {
         /* transform: rotate(180deg); */
-        /* transition: 1s; */
+        /* transition: 0.6s; */
     }
 }
 
@@ -340,4 +349,11 @@ input[type="color"] {
     inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
     cursor: pointer;
+}
+
+@media screen and (width<=520px) {
+    .buttons {
+        width: calc(100% - 20px);
+        padding-inline: 10px;
+    }
 }

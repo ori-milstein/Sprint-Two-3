@@ -7,6 +7,7 @@ function initGallery() {
     gallery.innerHTML = `
     <a href="#">
         <img src="Fonts/upload-solid.svg" alt="" class="upload">
+        <input type="file" class="file-input btn" name="image" onchange="onImgInput(event)" accept="image/*" />
         </a>
     `
     gallery.innerHTML += imgs.map(img =>
@@ -17,7 +18,7 @@ function initGallery() {
     ).join('')
 }
 
-function renderGallery(params) {
+function renderGallery() {
     const gallery = document.querySelector('.gallery')
     const editor = document.querySelector('.editor')
     gallery.classList.remove('hidden')
@@ -26,5 +27,10 @@ function renderGallery(params) {
 
 function onImgSelect(id) {
     setImg(id)
-    renderMeme()
+    renderMeme(false, true)
+}
+
+function onImgInput(ev) {
+    console.log('hi')
+    loadImageFromInput(ev)
 }

@@ -242,6 +242,33 @@ input[type="color"] {
     height: 200px;
 }
 
+/* .gallery img:first-of-type {
+    height: 100px;
+} */
+
+.upload {
+    height: 70px;
+    width: 70px;
+}
+
+.gallery a:first-of-type {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    display: grid;
+    place-content: center;
+
+}
+
+.gallery input {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
 .hamburger {
     display: none;
 }

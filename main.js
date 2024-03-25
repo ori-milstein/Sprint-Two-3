@@ -113,3 +113,26 @@ function coverCanvasWithImg(elImg) {
 
     gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
 }
+
+function loadImageFromInput(ev) {
+    console.log('hi')
+    const reader = new FileReader()
+    reader.crossOrigin = "anonymous"
+
+    let img = new Image()
+    img.crossOrigin = "anonymous"
+
+    reader.onload = ev => {
+
+        img.src = ev.target.result
+        onAddImg(img.src)
+
+        // img.onload = () => renderImg(img)
+    }
+    reader.readAsDataURL(ev.target.files[0])
+}
+
+function onAddImg(src) {
+    addImg(src)
+    renderMeme(false, true, false, false, false, src)
+}

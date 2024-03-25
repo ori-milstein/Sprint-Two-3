@@ -11,7 +11,9 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
 
     const meme = getMeme()
     const img = new Image()
-    img.src = `img/meme-imgs/meme-imgs-square/${meme.selectedImgId}.jpg`
+
+    if (meme.uploadSrc) changeSelectedImg()
+    img.src = (meme.uploadSrc) ? `${meme.uploadSrc}` : `img/meme-imgs/meme-imgs-square/${meme.selectedImgId}.jpg`
 
     img.addEventListener("load", () => {
         resizeCanvas(img)

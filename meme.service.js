@@ -19,6 +19,7 @@ var gImgs = [
     { id: 16, url: 'img/16.jpg', keywords: ['funny', 'cat'] },
     { id: 17, url: 'img/17.jpg', keywords: ['funny', 'cat'] },
     { id: 18, url: 'img/18.jpg', keywords: ['funny', 'cat'] },
+    // { id: 19, url: 'img/19.jpg', keywords: ['funny', 'cat'] },
 ]
 var gMeme = {
     selectedImgId: 5,
@@ -29,6 +30,7 @@ var gMeme = {
     ],
     isDrag: false,
     isCirclePicked: false,
+    uploadSrc: null,
 }
 
 function getMeme() {
@@ -39,7 +41,17 @@ function getImgs() {
     return gImgs
 }
 
+function addImg(src) {
+    gImgs.push({ id: gImgs[gImgs.length - 1].id + 1, url: `${src}`, keywords: ['funny', 'cat'] },)
+    gMeme.uploadSrc = src
+}
+
+function changeSelectedImg(id = gImgs.length) {
+    gMeme.selectedImgId = id
+}
+
 function setImg(id) {
+    gMeme.uploadSrc = null
     gMeme.selectedImgId = id
 }
 

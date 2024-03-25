@@ -7,3 +7,13 @@
     font-family: fa;
     src: url(/Fonts/webfonts/fa-regular-400.ttf);
 }
+
+@font-face {
+    font-family: Poppins-regular;
+    src: url(/Fonts/Poppins/Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: Poppins-bold;
+    src: url(/Fonts/Poppins/Poppins-Bold.ttf);
+}

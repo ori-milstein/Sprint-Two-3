@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    font-family: schulvokal;
+    font-family: Poppins-regular;
     background-color: RGBA(34, 37, 44, 1);
     background-color: #22252c;
 }
@@ -29,7 +29,7 @@ header {
     padding-inline: calc((90 / 1260) * calc(100vw - 10px));
     background-color: rgb(48, 187, 114);
     background: linear-gradient(246deg, rgba(48, 187, 114, 1) 0%, rgba(16, 146, 170, 1) 100%);
-    font-family: schulvokal;
+    font-family: Poppins-regular;
 }
 
 header ul {
@@ -58,7 +58,8 @@ header li a:hover {
 
 header span {
     font-size: 2em;
-    font-weight: bold;
+    /* font-weight: bold; */
+    font-family: Poppins-bold;
 }
 
 .main {

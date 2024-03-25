@@ -31,38 +31,24 @@ var gMeme = {
     isCirclePicked: false,
 }
 
-var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
-
 function getMeme() {
     return gMeme
-}
-
-function updatePosition(pos, idx) {
-    gMeme.lines[idx].pos = pos
-}
-
-function addLine() {
-    gMeme.lines.push({ txt: 'Enter Text Here', size: 20, color: '#ff0000', pos: {} })
-    gMeme.selectedLineIdx = gMeme.lines.length - 1
 }
 
 function getImgs() {
     return gImgs
 }
 
-function setLineTxt(txt, lineIdx = 0) {
+function setImg(id) {
+    gMeme.selectedImgId = id
+}
+
+function setLineTxt(txt) {
     const { selectedLineIdx, lines } = gMeme
 
     lines[selectedLineIdx].txt = txt
 }
 
-function switchLine(idx) {
-    var { selectedLineIdx, lines } = gMeme
-
-    gMeme.selectedLineIdx = (idx === undefined) ? (selectedLineIdx === lines.length - 1) ? 0 : ++gMeme.selectedLineIdx : idx
-
-    return gMeme.selectedLineIdx
-}
 
 function setLineColor(color, lineIdx = gMeme.selectedLineIdx) {
     gMeme.lines[lineIdx].color = color
@@ -73,13 +59,30 @@ function setFontSize(by, discrete) {
     else gMeme.lines[gMeme.selectedLineIdx].size += by / 5
 }
 
-function setImg(id) {
-    gMeme.selectedImgId = id
+function addLine() {
+    gMeme.lines.push({ txt: 'Enter Text Here', size: 20, color: '#ff0000', pos: {} })
+    gMeme.selectedLineIdx = gMeme.lines.length - 1
+}
+
+function switchLine(idx) {
+    var { selectedLineIdx, lines } = gMeme
+
+    gMeme.selectedLineIdx = (idx === undefined) ? (selectedLineIdx === lines.length - 1) ? 0 : ++gMeme.selectedLineIdx : idx
+
+    return gMeme.selectedLineIdx
+}
+
+function updatePosition(pos, idx) {
+    gMeme.lines[idx].pos = pos
 }
 
 function moveRect(dx, dy) {
     gMeme.lines[gMeme.selectedLineIdx].pos.x += dx
     gMeme.lines[gMeme.selectedLineIdx].pos.y += dy
+}
+
+function updateCirclePos(x, y) {
+    gMeme.lines[gMeme.selectedLineIdx].circlePos = { x, y }
 }
 
 function setDrag(isDrag) {
@@ -88,10 +91,6 @@ function setDrag(isDrag) {
 
 function setCirclePicked(isCircle) {
     gMeme.isCirclePicked = isCircle
-}
-
-function updateCirclePos(x, y) {
-    gMeme.lines[gMeme.selectedLineIdx].circlePos = { x, y }
 }
 
 function isCircleClicked(clickedPos, line) {

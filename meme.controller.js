@@ -85,13 +85,13 @@ function drawRectAround(pos, idx, isNoRect) {
 function onCanvasClick(ev) {
     const line = clickedLine()
 
-    console.log('line', line)
+    //console.log('line', line)
     if (line) onSwitchLine(getMeme().lines.indexOf(line))
     else {
         setCirclePicked(false)
         renderMeme(false, false, true)
     }
-    console.log('getMeme().isCirclePicked', getMeme().isCirclePicked)
+    //console.log('getMeme().isCirclePicked', getMeme().isCirclePicked)
     return line
 }
 
@@ -106,7 +106,7 @@ function onChangeColor(val, idx = getMeme().selectedLineIdx) {
 
     setLineColor(val, idx)
     gCtx.fillStyle = val
-    console.log('gCtx', gCtx)
+    //console.log('gCtx', gCtx)
     svgPath.setAttribute('fill', `${val}`)
 
     renderMeme()
@@ -163,13 +163,13 @@ function onDownload() {
 }
 
 function onDown(ev) {
-    console.log('mousedown')
+    //console.log('mousedown')
     gStartPos = getEvPos(ev)
-    console.log('gStartPos', gStartPos)
+    //console.log('gStartPos', gStartPos)
     const isRect = isRectClicked(gStartPos)
-    console.log('isRect', isRect)
+    //console.log('isRect', isRect)
     const isCircle = isCircleClicked(gStartPos)
-    console.log('isCircle', isCircle)
+    //console.log('isCircle', isCircle)
     if (!isRect && !isCircle) {
         renderMeme()
         return
@@ -178,27 +178,27 @@ function onDown(ev) {
     if (isRect) {
         ev.preventDefault()
         onCanvasClick(ev)
-        console.log('rect is clicked')
+        //console.log('rect is clicked')
         setDrag(true)
     }
     if (isCircle) {
         ev.preventDefault()
-        console.log('cicle is clicked')
+        //console.log('cicle is clicked')
         setDrag(true)
         setCirclePicked(true)
     }
     document.body.style.cursor = 'grabbing'
-    console.log('ev.button', ev.button)
+    //console.log('ev.button', ev.button)
     if (ev.button === 2) {
-        console.log('right click')
+        //console.log('right click')
     }
     renderMeme()
 }
 
 function onDown2(ev) {
-    console.log('mousedown')
+    //console.log('mousedown')
     gStartPos = getEvPos(ev)
-    console.log('gStartPos', gStartPos)
+    //console.log('gStartPos', gStartPos)
 
     const line = onCanvasClick()
 
@@ -210,19 +210,19 @@ function onDown2(ev) {
 function onMove(ev) {
     const { isDrag, isCirclePicked } = getMeme()
     if (!isDrag && !isCirclePicked) return
-    console.log('isDrag', isDrag)
-    console.log('isCircle', isCirclePicked)
+    //console.log('isDrag', isDrag)
+    //console.log('isCircle', isCirclePicked)
     const pos = getEvPos(ev)
-    console.log('gStartPos.x', gStartPos.x)
-    console.log('gStartPos.y', gStartPos.y)
+    //console.log('gStartPos.x', gStartPos.x)
+    //console.log('gStartPos.y', gStartPos.y)
     const dx = pos.x - gStartPos.x
     const dy = pos.y - gStartPos.y
-    console.log('dx', dx)
-    console.log('dy', dy)
+    //console.log('dx', dx)
+    //console.log('dy', dy)
 
     const circleDx = pos.x - getMeme().lines[getMeme().selectedLineIdx].circlePos.x
 
-    console.log('isCirclePicked', isCirclePicked)
+    //console.log('isCirclePicked', isCirclePicked)
     if (isDrag && !isCirclePicked) moveRect(dx, dy)
     else if (isDrag && isCirclePicked) {
         onChangeFontSize(-circleDx)

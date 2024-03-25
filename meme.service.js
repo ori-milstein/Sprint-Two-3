@@ -96,13 +96,13 @@ function updateCirclePos(x, y) {
 
 function isCircleClicked(clickedPos, line) {
     const { x, y } = line.circlePos
-    console.log('x', x)
-    console.log('y', y)
+    //console.log('x', x)
+    //console.log('y', y)
     const distance =
         Math.sqrt((x - clickedPos.x) ** 2 + (y - clickedPos.y) ** 2)
 
-    console.log('distance', distance)
-    console.log('isCircleClicked', distance <= 6)
+    //console.log('distance', distance)
+    //console.log('isCircleClicked', distance <= 6)
 
     if (distance <= 6) setCirclePicked(true)
 

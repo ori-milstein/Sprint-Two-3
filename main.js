@@ -22,8 +22,8 @@ function initCanvas() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
 
-    addListeners()
     resizeCanvas()
+    addListeners()
 
     window.addEventListener('resize', () => {
         const isEditorHidden = document.querySelector('.editor').classList.contains('hidden')
@@ -41,13 +41,13 @@ function addListeners() {
 }
 
 function addMouseListeners() {
-    gElCanvas.addEventListener('mousedown', onDown2)
+    gElCanvas.addEventListener('mousedown', onDown)
     gElCanvas.addEventListener('mousemove', onMove)
     gElCanvas.addEventListener('mouseup', onUp)
 }
 
 function addTouchListeners() {
-    gElCanvas.addEventListener('touchstart', onDown2)
+    gElCanvas.addEventListener('touchstart', onDown)
     gElCanvas.addEventListener('touchmove', onMove)
     gElCanvas.addEventListener('touchend', onUp)
 }

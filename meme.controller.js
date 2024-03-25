@@ -48,7 +48,7 @@ function renderText(isLineNew = false) {
     drawText(secondLine.txt, secondLine.pos.x, secondLine.pos.y)
     gCtx.closePath()
 
-    rest.forEach((line, idx) => {
+    rest.forEach(line => {
         gCtx.beginPath()
         gCtx.fillStyle = line.color
         gCtx.font = `${line.size}px arial`
@@ -59,17 +59,11 @@ function renderText(isLineNew = false) {
     if (isLineNew) onSwitchLine(getMeme().selectedLineIdx, isLineNew)
 }
 
-function renderRects() {
-    getMeme().lines.forEach((line, idx) => {
-        drawRectAround(positions[idx], idx)
-    })
-}
-
 function renderRect(idx) {
     drawRectAround(getMeme().lines[idx].pos, idx)
 }
 
-function drawRectAround(pos, idx, isNoRect) {
+function drawRectAround(pos, idx) {
     const size = getMeme().lines[getMeme().selectedLineIdx].size
 
     gCtx.font = size + "px arial"
@@ -82,7 +76,7 @@ function drawRectAround(pos, idx, isNoRect) {
     drawCircle(pos.x - width / 2 - 10, pos.y - 2)
 }
 
-function onCanvasClick(ev) {
+function onCanvasClick() {
     const line = clickedLine()
 
     //console.log('line', line)
@@ -147,7 +141,6 @@ function focusTextInput() {
 
     elTxtInput.value = selectedLineTxt
     if (mq.matches) {
-        // elTxtInput.focus()
         elTxtInput.select()
     }
 }
@@ -163,39 +156,6 @@ function onDownload() {
 }
 
 function onDown(ev) {
-    //console.log('mousedown')
-    gStartPos = getEvPos(ev)
-    //console.log('gStartPos', gStartPos)
-    const isRect = isRectClicked(gStartPos)
-    //console.log('isRect', isRect)
-    const isCircle = isCircleClicked(gStartPos)
-    //console.log('isCircle', isCircle)
-    if (!isRect && !isCircle) {
-        renderMeme()
-        return
-    }
-
-    if (isRect) {
-        ev.preventDefault()
-        onCanvasClick(ev)
-        //console.log('rect is clicked')
-        setDrag(true)
-    }
-    if (isCircle) {
-        ev.preventDefault()
-        //console.log('cicle is clicked')
-        setDrag(true)
-        setCirclePicked(true)
-    }
-    document.body.style.cursor = 'grabbing'
-    //console.log('ev.button', ev.button)
-    if (ev.button === 2) {
-        //console.log('right click')
-    }
-    renderMeme()
-}
-
-function onDown2(ev) {
     //console.log('mousedown')
     gStartPos = getEvPos(ev)
     //console.log('gStartPos', gStartPos)

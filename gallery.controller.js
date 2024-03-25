@@ -20,8 +20,8 @@ function initGallery() {
 function renderGallery(params) {
     const gallery = document.querySelector('.gallery')
     const editor = document.querySelector('.editor')
-    editor.classList.add('hidden')
     gallery.classList.remove('hidden')
+    editor.classList.add('hidden')
 }
 
 function onImgSelect(id) {

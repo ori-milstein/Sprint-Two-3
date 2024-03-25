@@ -261,6 +261,10 @@ input[type="color"] {
     .canvas-container {
         align-self: center;
     }
+
+    .hidden {
+        display: none;
+    }
 }
 
 @media screen and (width<=785px) {
@@ -306,6 +310,10 @@ input[type="color"] {
         text-decoration: none;
         font-size: 40px;
     }
+
+    .hidden {
+        display: none;
+    }
 }
 
 .main-screen {
@@ -319,5 +327,9 @@ input[type="color"] {
     .buttons {
         width: calc(100% - 20px);
         padding-inline: 10px;
+    }
+
+    .hidden {
+        display: none;
     }
 }

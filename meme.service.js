@@ -27,10 +27,8 @@ var gMeme = {
         { txt: 'I sometimes eat Falafel', size: 20, color: '#ff0000', circlePos: {} },
         { txt: 'I enjoy eating Falafel', size: 20, color: '#ff0000', circlePos: {} },
     ],
-    // downloadClicked: false
     isDrag: false,
     isCirclePicked: false,
-    // isRectPicked: true,
 }
 
 var gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
@@ -60,9 +58,6 @@ function setLineTxt(txt, lineIdx = 0) {
 
 function switchLine(idx) {
     var { selectedLineIdx, lines } = gMeme
-
-    // if (idx) gMeme.selectedLineIdx = idx
-    // else if (selectedLineIdx === lines.length - 1) { }
 
     gMeme.selectedLineIdx = (idx === undefined) ? (selectedLineIdx === lines.length - 1) ? 0 : ++gMeme.selectedLineIdx : idx
 
@@ -100,17 +95,15 @@ function updateCirclePos(x, y) {
 }
 
 function isCircleClicked(clickedPos, line) {
-    // const { x, y } = gMeme.lines[gMeme.selectedLineIdx].circlePos
     const { x, y } = line.circlePos
     console.log('x', x)
     console.log('y', y)
-    // Calc the distance between two dots
     const distance =
         Math.sqrt((x - clickedPos.x) ** 2 + (y - clickedPos.y) ** 2)
 
     console.log('distance', distance)
     console.log('isCircleClicked', distance <= 6)
-    //If its smaller then the radius of the circle we are inside
+
     if (distance <= 6) setCirclePicked(true)
 
     return distance <= 6

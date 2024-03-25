@@ -9,32 +9,22 @@ html {
 }
 
 body {
-    /* margin: 30px; */
-    /* display: grid; */
-    /* place-content: center; */
     font-family: schulvokal;
     background-color: RGBA(34, 37, 44, 1);
     background-color: #22252c;
 }
 
 .layout {
-    /* width: 100%; */
     margin-top: 15px;
-    /* display: grid; */
-    /* grid:
-        "header" 80px "main" 1fr; */
 }
 
 header {
     margin: 0 auto;
-    /* grid-area: header; */
     display: flex;
     width: calc(100% - 10px);
-    /* grid-template-columns: 286px 1fr; */
     justify-content: space-between;
     align-items: center;
     border-radius: 40px;
-    /* margin-inline: 5px; */
     margin-bottom: 18px;
     padding-inline: calc((90 / 1260) * calc(100vw - 10px));
     background-color: rgb(48, 187, 114);
@@ -83,7 +73,6 @@ header span {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-
 }
 
 
@@ -97,15 +86,12 @@ header span {
 canvas {
     transform: rotate3d(0, 0, 0);
     background-color: darkgray;
-    /* width: 100%; */
 }
 
 .buttons {
     place-self: center;
     background-color: #383b42;
-    /* height: fit-content; */
     width: 500px;
-    /* width: 100%; */
     padding-block: 30px;
     padding-inline: 50px;
     border-radius: 30px;
@@ -124,7 +110,6 @@ canvas {
 
 input[type="text"] {
     display: block;
-    /* font-size: 1.7em; */
     outline: none;
     border-radius: 40px;
     padding-block: 20px;
@@ -132,13 +117,8 @@ input[type="text"] {
     text-align: center;
 }
 
-input[type="text"]:checked {
-    /* outline: 3px solid limegreen; */
-}
-
 .main-buttons {
     justify-self: center;
-    /* width: clac(53px * 3 + 30px); */
     display: grid;
     grid-auto-flow: column;
     gap: 10px;
@@ -276,18 +256,10 @@ input[type="color"] {
         display: flex;
         flex-direction: column;
         align-content: center;
-        /* display: flex; */
-        /* grid-auto-flow: row; */
-        /* flex-direction: row; */
-        /* justify-content: center; */
-        /* align-items: center; */
-        /* gap: 20px; */
-
     }
 
     .canvas-container {
         align-self: center;
-        /* width: 80vw; */
     }
 }
 
@@ -307,13 +279,10 @@ input[type="color"] {
         display: flex;
         flex-direction: column;
         padding: 0;
-        /* margin: 0; */
         gap: 60px;
     }
 
     nav li {
-        /* display: block; */
-        /* display: flex; */
         width: 100%;
     }
 
@@ -336,11 +305,6 @@ input[type="color"] {
         align-self: start;
         text-decoration: none;
         font-size: 40px;
-    }
-
-    .hamburger {
-        /* transform: rotate(180deg); */
-        /* transition: 0.6s; */
     }
 }
 

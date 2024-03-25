@@ -23,7 +23,6 @@ function initCanvas() {
     gCtx = gElCanvas.getContext('2d')
 
     addListeners()
-    // initCanvasWidth()
     resizeCanvas()
 
     window.addEventListener('resize', () => {
@@ -39,15 +38,6 @@ function initCanvas() {
 function addListeners() {
     addMouseListeners()
     addTouchListeners()
-
-    // window.addEventListener('resize', () => {
-    //     resizeCanvas()
-
-    //     const center = { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }
-    //     createCircle(center)
-
-    //     renderCanvas()
-    // })
 }
 
 function addMouseListeners() {
@@ -77,25 +67,6 @@ function initInputs() {
     svgPath.setAttribute('fill', `${firstLineColor}`)
 }
 
-function onDraw(ev) {
-    const { offsetX, offsetY } = ev
-
-    switch (gCurrShape) {
-        case 'triangle':
-            drawTriangle(offsetX, offsetY)
-            break
-        case 'rect':
-            drawRect(offsetX, offsetY)
-            break
-        case 'text':
-            drawText('Coding Academy', offsetX, offsetY)
-            break
-        case 'line':
-            drawLine(offsetX, offsetY)
-            break
-    }
-}
-
 function drawText(text, x, y) {
     gCtx.beginPath()
     gCtx.fillText(text, x, y)
@@ -104,8 +75,6 @@ function drawText(text, x, y) {
 }
 
 function drawRect(x, y, width, height) {
-    const oldSyle = gCtx.strokeStyle
-
     gCtx.beginPath()
     gCtx.fillStyle = 'lightblack'
     gCtx.strokeStyle = 'lightblack'
@@ -140,9 +109,7 @@ function initCanvasWidth(elImg) {
 }
 
 function coverCanvasWithImg(elImg) {
-    // gElCanvas.width = document.querySelector('.canvas-container').width
     gElCanvas.height = (elImg.naturalHeight / elImg.naturalWidth) * gElCanvas.width
-    // gElCanvas.width = (elImg.naturalHeight / elImg.naturalWidth) * gElCanvas.height
 
     gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
 }

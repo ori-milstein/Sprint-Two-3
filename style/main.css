@@ -58,12 +58,10 @@ header li a:hover {
 
 header span {
     font-size: 2em;
-    /* font-weight: bold; */
     font-family: Poppins-bold;
 }
 
-.main {
-    /* margin-inline: 16px; */
+main {
     padding-inline: 16px;
     width: 100%;
 }
@@ -89,7 +87,7 @@ canvas {
     background-color: darkgray;
 }
 
-.buttons {
+.meme-btns {
     place-self: center;
     background-color: #383b42;
     width: 500px;
@@ -98,7 +96,7 @@ canvas {
     border-radius: 30px;
 }
 
-.buttons form {
+.meme-btns form {
     display: grid;
     grid-auto-flow: row;
     gap: 20px;
@@ -118,7 +116,7 @@ input[type="text"] {
     text-align: center;
 }
 
-.main-buttons {
+.primary-btns {
     justify-self: center;
     display: grid;
     grid-auto-flow: column;
@@ -127,7 +125,7 @@ input[type="text"] {
 }
 
 
-.main-buttons .button {
+.primary-btns .button {
     width: fit-content;
     padding-inline: 10px;
     padding-block: 6px;
@@ -352,7 +350,7 @@ input[type="color"] {
 }
 
 @media screen and (width<=520px) {
-    .buttons {
+    .meme-btns {
         width: calc(100% - 20px);
         padding-inline: 10px;
     }

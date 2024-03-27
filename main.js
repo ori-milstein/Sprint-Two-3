@@ -1,9 +1,10 @@
 'use strict'
 
-var gElCanvas
-var gCtx
+let gElCanvas
+let gCtx
 let gStartPos
 let gCircle = getMeme().lines[getMeme().selectedLineIdx].circlePos
+// this is too long and scary
 
 const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
 
@@ -39,6 +40,7 @@ function addListeners() {
 }
 
 function addMouseListeners() {
+    // can do this with object entries loop
     gElCanvas.addEventListener('mousedown', onDown)
     gElCanvas.addEventListener('mousemove', onMove)
     gElCanvas.addEventListener('mouseup', onUp)
@@ -66,16 +68,16 @@ function initInputs() {
 }
 
 function drawText(text, x, y) {
-    gCtx.beginPath()
+    // gCtx.beginPath()
     gCtx.fillText(text, x, y)
     gCtx.strokeText(text, x, y)
-    gCtx.closePath()
+    // gCtx.closePath()
 }
 
 function drawRect(x, y, width, height) {
     gCtx.beginPath()
-    gCtx.fillStyle = 'lightblack'
-    gCtx.strokeStyle = 'lightblack'
+    gCtx.fillStyle = getMeme().lines[getMeme().selectedLineIdx].color
+    gCtx.strokeStyle = 'black'
     gCtx.setLineDash([10, 10])
     gCtx.lineWidth = 1.5
     gCtx.strokeRect(x, y, width, height)
@@ -113,7 +115,6 @@ function coverCanvasWithImg(elImg) {
 }
 
 function loadImageFromInput(ev) {
-    console.log('hi')
     const reader = new FileReader()
     reader.crossOrigin = "anonymous"
 
@@ -121,11 +122,8 @@ function loadImageFromInput(ev) {
     img.crossOrigin = "anonymous"
 
     reader.onload = ev => {
-
         img.src = ev.target.result
         onAddImg(img.src)
-
-        // img.onload = () => renderImg(img)
     }
     reader.readAsDataURL(ev.target.files[0])
 }
@@ -133,4 +131,13 @@ function loadImageFromInput(ev) {
 function onAddImg(src) {
     addImg(src)
     renderMeme(false, true, true, false, false)
+}
+
+function onFormSubmit(ev) {
+    ev.preventDefault()
+}
+
+function onToggleMenu() {
+    document.querySelector('body').classList.toggle('menu-open')
+    document.querySelector('.main-screen').classList.toggle('hidden')
 }

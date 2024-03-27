@@ -25,8 +25,8 @@ var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
     lines: [
-        { txt: 'I sometimes eat Falafel', size: 20, color: '#ff0000', pos: {}, circlePos: {} },
-        { txt: 'I enjoy eating Falafel', size: 20, color: '#ff0000', pos: {}, circlePos: {} },
+        { txt: 'I sometimes eat Falafel', size: 40, color: '#ffffff', pos: {}, circlePos: {} },
+        { txt: 'I enjoy eating Falafel', size: 40, color: '#ffffff', pos: {}, circlePos: {} },
     ],
     isDrag: false,
     isCirclePicked: false,

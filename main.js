@@ -2,7 +2,7 @@
 
 var gElCanvas
 var gCtx
-let gStartPos = getMeme().lines[getMeme().selectedLineIdx].pos
+let gStartPos
 let gCircle = getMeme().lines[getMeme().selectedLineIdx].circlePos
 
 const TOUCH_EVENTS = ['touchstart', 'touchmove', 'touchend']
@@ -22,15 +22,13 @@ function initCanvas() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
 
-    resizeCanvas()
     addListeners()
 
     window.addEventListener('resize', () => {
         const isEditorHidden = document.querySelector('.editor').classList.contains('hidden')
 
         if (!isEditorHidden) {
-            resizeCanvas()
-            renderMeme()
+            renderMeme(false, true)
         }
     })
 }
@@ -134,5 +132,5 @@ function loadImageFromInput(ev) {
 
 function onAddImg(src) {
     addImg(src)
-    renderMeme(false, true, false, false, false, src)
+    renderMeme(false, true, true, false, false)
 }

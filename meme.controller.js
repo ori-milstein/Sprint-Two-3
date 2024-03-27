@@ -2,7 +2,7 @@
 
 var positions
 
-function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownload = false, isInputFocus = false) {
+function renderMeme(isLineNew = false, isInit = false, isRect = true, isDownload = false, isInputFocus = false) {
     const gallery = document.querySelector('.gallery')
     const editor = document.querySelector('.editor')
 
@@ -18,17 +18,18 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
     img.addEventListener("load", () => {
         resizeCanvas(img)
         coverCanvasWithImg(img)
-        if (isInit) positions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }]
-        positions.forEach((pos, idx) => updatePosition(pos, idx))
 
-        gCtx.textAlign = 'center'
-        gCtx.textBaseline = 'middle'
+        if (isInit) {
+            positions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }]
+            positions.forEach((pos, idx) => updatePosition(pos, idx))
+            gStartPos = getMeme().lines[getMeme().selectedLineIdx].pos
+        }
+
         renderText(isLineNew)
 
-        if (!isNoRect) renderRect(meme.selectedLineIdx)
+        if (isRect) renderRect(meme.selectedLineIdx)
 
         if (isDownload) onDownload()
-        if (isInit) gStartPos = getMeme().lines[getMeme().selectedLineIdx].pos
 
         if (isInputFocus) focusTextInput()
     })
@@ -37,6 +38,8 @@ function renderMeme(isLineNew = false, isInit = false, isNoRect = false, isDownl
 function renderText(isLineNew = false) {
     const [firstLine, secondLine, ...rest] = getMeme().lines
     gCtx.beginPath()
+    gCtx.textAlign = 'center'
+    gCtx.textBaseline = 'middle'
     gCtx.fillStyle = getMeme().lines[0].color
     gCtx.font = `${firstLine.size}px arial`
 
@@ -62,10 +65,7 @@ function renderText(isLineNew = false) {
 }
 
 function renderRect(idx) {
-    drawRectAround(getMeme().lines[idx].pos, idx)
-}
-
-function drawRectAround(pos, idx) {
+    const pos = getMeme().lines[idx].pos
     const size = getMeme().lines[getMeme().selectedLineIdx].size
 
     gCtx.font = size + "px arial"
@@ -81,13 +81,12 @@ function drawRectAround(pos, idx) {
 function onCanvasClick() {
     const line = clickedLine()
 
-    //console.log('line', line)
     if (line) onSwitchLine(getMeme().lines.indexOf(line))
     else {
         setCirclePicked(false)
-        renderMeme(false, false, true)
+        renderMeme(false, false, false)
     }
-    //console.log('getMeme().isCirclePicked', getMeme().isCirclePicked)
+
     return line
 }
 
@@ -120,7 +119,7 @@ function onAddLine() {
     positions.push({ x: gElCanvas.width / 2, y: gElCanvas.height / 2 })
     addLine()
     updatePosition({ x: gElCanvas.width / 2, y: gElCanvas.height / 2 }, getMeme().lines.length - 1)
-    renderMeme(isLineNew)
+    renderMeme(isLineNew, false, true, false, true)
 }
 
 function onSwitchLine(idx, isLineNew = false) {
@@ -132,7 +131,7 @@ function onSwitchLine(idx, isLineNew = false) {
     elColor.value = newLineColor
     svgPath.setAttribute('fill', `${newLineColor}`)
     if (isLineNew) return
-    renderMeme(false, false, false, false, true)
+    renderMeme(false, false, true, false, true)
 }
 
 function focusTextInput() {
@@ -158,9 +157,7 @@ function onDownload() {
 }
 
 function onDown(ev) {
-    //console.log('mousedown')
     gStartPos = getEvPos(ev)
-    //console.log('gStartPos', gStartPos)
 
     const line = onCanvasClick()
 
@@ -171,24 +168,15 @@ function onDown(ev) {
 
 function onMove(ev) {
     const { isDrag, isCirclePicked } = getMeme()
-    if (!isDrag && !isCirclePicked) return
-    //console.log('isDrag', isDrag)
-    //console.log('isCircle', isCirclePicked)
+    if (!isDrag /*&& !isCirclePicked*/) return
+
     const pos = getEvPos(ev)
-    //console.log('gStartPos.x', gStartPos.x)
-    //console.log('gStartPos.y', gStartPos.y)
     const dx = pos.x - gStartPos.x
     const dy = pos.y - gStartPos.y
-    //console.log('dx', dx)
-    //console.log('dy', dy)
-
     const circleDx = pos.x - getMeme().lines[getMeme().selectedLineIdx].circlePos.x
 
-    //console.log('isCirclePicked', isCirclePicked)
-    if (isDrag && !isCirclePicked) moveRect(dx, dy)
-    else if (isDrag && isCirclePicked) {
-        onChangeFontSize(-circleDx)
-    }
+    if (isCirclePicked) onChangeFontSize(-circleDx)
+    else moveRect(dx, dy)
 
     gStartPos = pos
 
@@ -237,24 +225,4 @@ function clickedLine() {
     })
 
     return line
-}
-
-function isRectClicked(ev) {
-    const { x, y } = ev
-
-    const line = getMeme().lines.find(line => {
-        const size = line.size
-        gCtx.font = size + "px arial"
-        const textMetrics = gCtx.measureText(line.txt)
-        const width = textMetrics.width
-        const height = textMetrics.actualBoundingBoxAscent
-        const rectX = line.pos.x - (width / 2) - 10
-        const rectY = line.pos.y - height - 10
-
-        return (x >= rectX && x <= rectX + width + 20 &&
-            y >= rectY && y <= rectY + height * 2 + 20)
-    })
-
-    if (line) return true
-    else return false
 }

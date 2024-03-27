@@ -1,19 +1,19 @@
 @font-face {
     font-family: schulvokal;
-    src: url(/Fonts/schulvokaldotless-font/Schulvokaldotless-x8Mm.ttf);
+    src: url(../Fonts/schulvokaldotless-font/Schulvokaldotless-x8Mm.ttf);
 }
 
 @font-face {
     font-family: fa;
-    src: url(/Fonts/webfonts/fa-regular-400.ttf);
+    src: url(../Fonts/webfonts/fa-regular-400.ttf);
 }
 
 @font-face {
     font-family: Poppins-regular;
-    src: url(/Fonts/Poppins/Poppins-Regular.ttf);
+    src: url(../Fonts/Poppins/Poppins-Regular.ttf);
 }
 
 @font-face {
     font-family: Poppins-bold;
-    src: url(/Fonts/Poppins/Poppins-Bold.ttf);
+    src: url(../Fonts/Poppins/Poppins-Bold.ttf);
 }

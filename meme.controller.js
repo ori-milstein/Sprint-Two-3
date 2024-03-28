@@ -129,6 +129,20 @@ function onDeleteLine() {
     }
 }
 
+function onDeleteLine2() {
+    if (!getMeme().lines.length) return
+
+    deleteLine()
+
+    if (!getMeme().lines.length) {
+        onChangeColor('red')
+        renderMeme(false, false, false, false, true)
+    } else {
+        onSwitchLine(getMeme().selectedLineIdx)
+        renderMeme()
+    }
+}
+
 function onChangeColor(val, idx = getMeme().selectedLineIdx) {
     const svgPath = document.querySelector('path')
 

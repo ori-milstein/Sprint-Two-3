@@ -2,7 +2,7 @@
 
 let positions
 
-function renderMeme(isLineNew = false, isInit = false, isRect = true, isDownload = false, isInputFocus = false) {
+function renderMeme(isLineNew = false, isInit = false, isRect = true, isDownload = false, renderTxtInpt = false) {
     const gallery = document.querySelector('.gallery')
     const editor = document.querySelector('.editor')
 
@@ -29,7 +29,7 @@ function renderMeme(isLineNew = false, isInit = false, isRect = true, isDownload
 
         if (isLineNew) onSwitchLine(meme.selectedLineIdx, isLineNew)
 
-        if (isInputFocus) renderTextInput()
+        if (renderTxtInpt) renderTextInput()
 
         if (isRect) renderRect(meme.selectedLineIdx)
 

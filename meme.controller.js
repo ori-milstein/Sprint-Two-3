@@ -101,20 +101,19 @@ function onDownload() {
 }
 
 function onChangeTxt(val) {
-    if (!getMeme().lines.length) onAddLine()
+    if (!getMeme().lines.length) onAddLine(true)
     setLineTxt(val)
     renderMeme()
 }
 
-function onAddLine() {
+function onAddLine(fromTxtInput = false) {
     const isLineNew = true
-    const isLines = getMeme().lines.length
 
     positions.push({ x: gElCanvas.width / 2, y: gElCanvas.height / 2 })
     addLine()
     updatePosition({ x: gElCanvas.width / 2, y: gElCanvas.height / 2 }, getMeme().lines.length - 1)
 
-    renderMeme(isLineNew, false, true, false, isLines)
+    renderMeme(isLineNew, false, true, false, !fromTxtInput)
 }
 
 function onDeleteLine() {
@@ -124,16 +123,21 @@ function onDeleteLine() {
         onSwitchLine(getMeme().selectedLineIdx)
         renderMeme()
     }
-    else renderMeme(false, false, false, false, true)
+    else {
+        onChangeColor('red')
+        renderMeme(false, false, false, false, true)
+    }
 }
 
 function onChangeColor(val, idx = getMeme().selectedLineIdx) {
     const svgPath = document.querySelector('path')
 
-    setLineColor(val, idx)
     gCtx.fillStyle = val
     svgPath.setAttribute('fill', `${val}`)
 
+    if (!getMeme().lines.length) return
+
+    setLineColor(val, idx)
     renderMeme()
 }
 

@@ -3,6 +3,8 @@
 let positions
 
 function renderMeme(isLineNew = false, isInit = false, isRect = true, isDownload = false, renderTxtInpt = false) {
+    if (!getMeme().lines.length) isRect = false
+
     const gallery = document.querySelector('.gallery')
     const editor = document.querySelector('.editor')
 
@@ -21,8 +23,10 @@ function renderMeme(isLineNew = false, isInit = false, isRect = true, isDownload
 
         if (isInit) {
             positions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }]
-            positions.forEach((pos, idx) => updatePosition(pos, idx))
-            gStartPos = meme.lines[meme.selectedLineIdx].pos
+            if (getMeme().lines.length) {
+                positions.forEach((pos, idx) => updatePosition(pos, idx))
+                gStartPos = meme.lines[meme.selectedLineIdx].pos
+            }
         }
 
         renderText()

@@ -65,12 +65,13 @@ function onSwitchLine(idx, isLineNew = false) {
 
 function renderTextInput() {
     const elTxtInput = document.querySelector('input[type="text"]')
-    const selectedLineTxt = getMeme().lines[getMeme().selectedLineIdx].txt
+    const selectedLineTxt = (getMeme().lines.length) ? getMeme().lines[getMeme().selectedLineIdx].txt : ''
     const mq = window.matchMedia("(min-width: 770px)")
 
 
     elTxtInput.value = selectedLineTxt
-    if (mq.matches) {
+
+    if (mq.matches && selectedLineTxt) {
         elTxtInput.select()
     }
 }
@@ -100,18 +101,20 @@ function onDownload() {
 }
 
 function onChangeTxt(val) {
+    if (!getMeme().lines.length) onAddLine()
     setLineTxt(val)
     renderMeme()
 }
 
 function onAddLine() {
     const isLineNew = true
+    const isLines = getMeme().lines.length
 
     positions.push({ x: gElCanvas.width / 2, y: gElCanvas.height / 2 })
     addLine()
     updatePosition({ x: gElCanvas.width / 2, y: gElCanvas.height / 2 }, getMeme().lines.length - 1)
 
-    renderMeme(isLineNew, false, true, false, true)
+    renderMeme(isLineNew, false, true, false, isLines)
 }
 
 function onDeleteLine() {
@@ -121,7 +124,7 @@ function onDeleteLine() {
         onSwitchLine(getMeme().selectedLineIdx)
         renderMeme()
     }
-    else renderMeme(false, false, false)
+    else renderMeme(false, false, false, false, true)
 }
 
 function onChangeColor(val, idx = getMeme().selectedLineIdx) {

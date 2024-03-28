@@ -95,7 +95,7 @@ function renderRect(idx) {
 function onDownload() {
     const elLink = document.createElement('a')
     const dataUrl = gElCanvas.toDataURL()
-    const firstLine = getMeme().lines[0].txt
+    const firstLine = (getMeme().lines.length) ? getMeme().lines[0].txt : getImgs()[getMeme().selectedImgId].keywords[0]
 
     elLink.setAttribute('href', dataUrl)
     elLink.setAttribute('download', `${firstLine}.png`)

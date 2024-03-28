@@ -51,6 +51,8 @@ function renderText() {
 }
 
 function onSwitchLine(idx, isLineNew = false) {
+    if (!getMeme().lines.length) return
+
     const newLineIdx = switchLine(idx)
     const elColor = document.querySelector('input[type="color"]')
     const newLineColor = getMeme().lines[newLineIdx].color
@@ -143,19 +145,27 @@ function onDeleteLine2() {
     }
 }
 
+function onCancelInput(ev) {
+    if (!getMeme().lines.length) ev.preventDefault()
+}
+
 function onChangeColor(val, idx = getMeme().selectedLineIdx) {
+    if (!getMeme().lines.length) return
+
     const svgPath = document.querySelector('path')
 
     gCtx.fillStyle = val
     svgPath.setAttribute('fill', `${val}`)
 
-    if (!getMeme().lines.length) return
+    // if (!getMeme().lines.length) return
 
     setLineColor(val, idx)
     renderMeme()
 }
 
 function onChangeFontSize(by, discrete = false) {
+    if (!getMeme().lines.length) return
+
     if (discrete) setFontSize(by, discrete)
     else setFontSize(by)
 

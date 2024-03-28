@@ -39,15 +39,21 @@
                             <input type="text" name="firstLine" oninput="onChangeTxt(this.value)">
                         </label>
                         <div class="primary-btns">
-                            <div role="button" class="button switch" onclick="onSwitchLine()" tabindex="0">
-                                <img src="Fonts/arrow-right-arrow-left-solid.svg" alt="" class="arrows">
-                            </div>
-                            <div role="button" class="button add" onclick="onAddLine()" tabindex="0">
-                                <img src="Fonts/plus-solid.svg" alt="" class="plus">
-                            </div>
-                            <div role="button" class="button delete" tabindex="0">
-                                <img src="Fonts/trash-solid.svg" alt="" class="trash">
-                            </div>
+                            <a href="#" onclick="onSwitchLine()">
+                                <div role="button" class="button switch">
+                                    <img src="Fonts/arrow-right-arrow-left-solid.svg" alt="" class="arrows">
+                                </div>
+                            </a>
+                            <a href="#" onclick="onAddLine()">
+                                <div role="button" class="button add">
+                                    <img src="Fonts/plus-solid.svg" alt="" class="plus">
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div role="button" class="button delete">
+                                    <img src="Fonts/trash-solid.svg" alt="" class="trash">
+                                </div>
+                            </a>
                         </div>
 
                         <div class="secondary-btns">

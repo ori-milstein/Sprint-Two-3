@@ -114,6 +114,16 @@ function onAddLine() {
     renderMeme(isLineNew, false, true, false, true)
 }
 
+function onDeleteLine() {
+    deleteLine()
+
+    if (getMeme().lines.length) {
+        onSwitchLine(getMeme().selectedLineIdx)
+        renderMeme()
+    }
+    else renderMeme(false, false, false)
+}
+
 function onChangeColor(val, idx = getMeme().selectedLineIdx) {
     const svgPath = document.querySelector('path')
 

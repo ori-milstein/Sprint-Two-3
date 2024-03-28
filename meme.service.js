@@ -84,6 +84,11 @@ function switchLine(idx) {
     return gMeme.selectedLineIdx
 }
 
+function deleteLine() {
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+    if (gMeme.lines.length) gMeme.selectedLineIdx = gMeme.lines.length - 1
+}
+
 function updatePosition(pos, idx) {
     gMeme.lines[idx].pos = pos
 }

@@ -88,11 +88,10 @@ function renderRect(idx) {
 
     const textMetrics = gCtx.measureText(getMeme().lines[idx].txt)
     const width = textMetrics.width
-    const upHeight = textMetrics.emHeightAscent
-    const downHeight = textMetrics.emHeightDescent
+    const height = textMetrics.actualBoundingBoxAscent
     const pos = getMeme().lines[idx].pos
 
-    drawRect(pos.x - width / 2, pos.y - upHeight, width, upHeight + downHeight)
+    drawRect(pos.x - width / 2 - 10, pos.y - height - 10, width + 20, height * 2 + 20)
     updateCirclePos(pos.x - width / 2 - 10, pos.y - 2)
     drawCircle(pos.x - width / 2 - 10, pos.y - 2)
 }
@@ -230,4 +229,23 @@ function getEvPos(ev) {
             y: ev.offsetY,
         }
     }
+}
+
+function clickedLine() {
+    const clickedPos = gStartPos
+
+    const line = getMeme().lines.find(line => {
+        const size = line.size
+        gCtx.font = size + "px arial"
+        const textMetrics = gCtx.measureText(line.txt)
+        const width = textMetrics.width
+        const height = textMetrics.actualBoundingBoxAscent
+        const rectX = line.pos.x - (width / 2) - 10
+        const rectY = line.pos.y - height - 10
+
+        return (isCircleClicked(clickedPos, line)) || (clickedPos.x >= rectX && clickedPos.x <= rectX + width + 20 &&
+            clickedPos.y >= rectY && clickedPos.y <= rectY + height * 2 + 20)
+    })
+
+    return line
 }
